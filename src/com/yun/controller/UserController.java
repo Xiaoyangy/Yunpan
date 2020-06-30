@@ -3,7 +3,6 @@ package com.yun.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import com.yun.service.FileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,8 +15,6 @@ import com.yun.service.UserService;
 public class UserController {
 	@Autowired
 	private UserService userService;
-	@Autowired
-	private FileService fileService;
 	/**
 	 * 登录
 	 * 
@@ -41,7 +38,6 @@ public class UserController {
 
 	/**
 	 * 注册
-	 * 
 	 * @param request
 	 * @param user
 	 * @return
