@@ -1,0 +1,88 @@
+@CHARSET "UTF-8";
+.content {
+	width: 100%;
+	height: 100%;
+}
+
+.top {
+	height: 10%;
+	width: 100%;
+}
+
+.bottom {
+	width: 100%;
+}
+
+.left {
+	width: 15%;
+	height: 90%;
+	float: left;
+}
+
+.right {
+	width: 85%;
+	height: 90%;
+	float: right;
+}
+
+#subMenu {
+	display: none;
+	position: relative;
+	margin-top: 0px;
+}
+
+#subMenu a {
+	font-size: 15px;
+	text-decoration: none;
+}
+
+#menubutton a {
+	padding-top: 9px;
+	height: 40px;
+	width: 70px;
+	font-size: 12px;
+}
+
+#menubutton div {
+	text-align: center;
+}
+
+.item {
+	text-decoration: none;
+	display: none;
+}
+
+.ul li:hover {
+	background: #E3E8EB;
+	cursor: pointer;
+}
+
+#pathnav a, #list a {
+	text-decoration: none;
+}
+.file {
+    position: relative;
+    display: inline-block;
+    background: #D0EEFF;
+    border: 1px solid #99D3F5;
+    border-radius: 4px;
+    padding: 4px 12px;
+    overflow: hidden;
+    color: #1E88C7;
+    text-decoration: none;
+    text-indent: 0;
+    line-height: 30px;
+}
+.file input {
+    position: absolute;
+    font-size: 100px;
+    right: 0;
+    top: 0;
+    opacity: 0;
+}
+.file:hover {
+    background: #AADFFD;
+    border-color: #78C3F3;
+    color: #004974;
+    text-decoration: none;
+}

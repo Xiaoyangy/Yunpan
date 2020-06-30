@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.dao.UserDao" >
+	<select id="findUser" parameterType="com.yun.pojo.User" resultType="com.yun.pojo.User">
+		select * from user where username = #{username} and password = #{password}
+	</select>
+	
+	<select id="findUserByUserName" parameterType="java.lang.String" resultType="com.yun.pojo.User">
+		select * from user where username = #{username}
+	</select>
+	<select id="getCountSize" parameterType="java.lang.String" resultType="java.lang.String">
+		select countSize from user where username = #{username}
+	</select>
+	
+	<insert id="addUser" parameterType="com.yun.pojo.User">
+		insert into user(username, password) values(#{username}, #{password})
+	</insert>
+	
+	<update id="reSize">
+		update user set countSize = #{formatSize} where username = #{username}
+	</update>
+</mapper>

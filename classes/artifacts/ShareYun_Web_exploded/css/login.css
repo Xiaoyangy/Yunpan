@@ -1,0 +1,287 @@
+* {
+	padding: 0px;
+	margin: 0px;
+}
+.clearFloat{
+	clear:both;
+}
+a {
+	text-decoration: none;
+}
+
+ul {
+	list-style: outside none none;
+}
+body,html{
+	margin:0px;
+	height:100%;
+}
+
+.slider{
+	width: 100%;
+	height: 100%;
+	position: relative;
+	/*margin-top: -110px;*/
+	/*border: solid 1px red;*/
+}
+.slider-panel img{
+	width: 1366px;
+	height: 634px;
+	opacity: 0.8;
+	/*border: solid 1px black;*/
+}
+.slider-extra {
+	width: inherit;
+	height: 500px;
+}
+#slider-title{
+	position: absolute;
+	width: 200px;
+	height: 50px;
+	top:10px;
+	z-index: 2;
+	font-size: 1.5em;
+	margin-left: 30px;
+	font-weight: 600;
+	/*margin-top: 20px;*/
+	/*font: bold;*/
+	color: white;
+	/*background: white;*/
+	/*opacity: 1;*/
+	/*border: solid 1px red;*/
+}
+
+#title-logo{
+	/*margin-top:-200px;*/
+	position: absolute;
+	left: 50px;
+	top: 10px;
+
+}
+.slider {
+	text-align: center;
+	/*margin: 30px auto;*/
+	position: relative;
+	z-index:1;
+}
+
+.slider-panel,
+.slider-nav,
+.slider-pre,
+.slider-next {
+	position: absolute;
+	z-index: 8;
+}
+
+.slider-panel {
+	width: inherit;
+	height: 500px;
+	/*border: solid 1px red;*/
+	position: absolute;
+}
+
+.slider-panel img {
+	/*opacity: 0.9;*/
+	/*border: none;*/
+}
+
+.slider-extra {
+	position: relative;
+}
+
+.slider-nav {
+	margin-left: -51px;
+	position: absolute;
+	left: 50%;
+	bottom: 4px;
+}
+
+.slider-nav li {
+	background: white;
+	border-radius: 50%;
+	color: #fff;
+	cursor: pointer;
+	margin: 0 4px;
+	overflow: hidden;
+	text-align: center;
+	display: inline-block;
+	height: 12px;
+	line-height: 12px;
+	width: 12px;
+}
+/*.slider-item{
+	background: white;
+	border: solid 1px grey;
+}*/
+.slider-nav .slider-item-selected {
+	background: grey;
+	border: solid 1px grey;
+}
+
+.slider-page a {
+	background: rgba(0, 0, 0, 0.2);
+	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#33000000, endColorstr=#33000000);
+	color: #fff;
+	text-align: center;
+	display: block;
+	font-family: "simsun";
+	font-size: 22px;
+	width: 28px;
+	height: 62px;
+	line-height: 62px;
+	margin-top: -31px;
+	position: absolute;
+	top: 50%;
+}
+
+.slider-page a:HOVER {
+	background: rgba(0, 0, 0, 0.4);
+	filter: progid: DXImageTransform.Microsoft.gradient(startColorstr=#66000000, endColorstr=#66000000);
+}
+
+.slider-next {
+	left: 100%;
+	margin-left: -28px;
+}
+.icon{
+	position:relative;
+	margin-top:-90px;
+}
+.div-li{
+	height: 90px;
+	width: 200px;
+	float:left;
+	/*border: solid 1px red;*/
+}
+.li-icon{
+	float: left;
+	height: 45px;
+	margin-left: 100px;
+	width: 45px;
+}
+.title{
+	/*margin-top:70px;*/
+	color: darkgrey;
+	font-size: large;
+	font-weight: 500;
+	font-family: "微软雅黑";
+	margin-left: 85px;
+}
+#title-se{
+	color: darkgrey;
+	font-size: large;
+	font-weight: 500;
+	font-family: "微软雅黑";
+	margin-left: 95px;
+}
+.title-se1{
+	color: darkgrey;
+	font-size: large;
+	font-weight: 500;
+	font-family: "微软雅黑";
+	margin-left: 105px;
+}
+.ul-icon
+{
+	margin-left: 150px;
+}
+
+
+
+#login{
+	position: absolute;
+	height: 305px;
+	width: 320px;
+	top:0;
+	margin-top:90px;
+    left: 960px;
+	background: white;
+	border: solid 1px white;
+	border-radius: 5px 5px 5px 5px ;
+	z-index:2;
+}
+#form-title{
+	height: 80px;
+	width:320px ;
+	line-height: 80px;
+	text-align: center;
+}
+.login-input{
+	height: 36px;
+	width: 280px;
+	margin-left: 20px;
+	border: solid 1px gainsboro;
+	border-radius: 2px 2px 2px 2px;
+}
+#name{
+	border-bottom: none;
+}
+.input{
+	margin-left: 20px;
+	margin-top: 20px;
+}
+.ck_text{
+	font-size: small;
+	margin-left: 10px;
+}
+.login-btn{
+	width: 280px;
+	height: 40px;
+	margin-left: 20px;
+	margin-top: 15px;
+	color: white;
+	 border: 0 none; 
+	background: #5D9BF9;
+	border-radius: 5px 5px 5px 5px;
+}
+.a_login{
+	margin-left: 20px;
+	font-size: 0.8em;
+	margin-top: 15px;
+	color: #5D9BF9;
+}
+#phone{
+	margin-left: 130px;
+}
+#a_div{
+	margin-top: 15px;
+}
+#bottom{
+	background: #F3F8FF;
+	height: 76px;
+	margin-top: 20px;
+	width: 320px;
+}
+#inner{
+	height: 40px;
+	width: 280px;
+	/*border: solid 1px red;*/
+	/*float: left;*/
+	margin-left: 20px;
+}
+.inner{
+	margin-top: 20px;
+	font-size: small;
+	float: left;
+}
+.img-login{
+	float: left;
+	margin-left:25px;
+	margin-top: 15px;
+	
+}
+.a_inner{
+	font-size: 1em;
+	margin-top: 15px;
+	color: #5D9BF9;
+}
+.submit{
+	width:80px;
+	height: 30px;
+	margin-left: 30px;
+	margin-top: 10px;
+	background: #F3F8FF;
+	color: #5D9BF9;
+	border-radius: 3px 3px 3px 3px;
+	border: solid 1px #5D9BF9;
+}
