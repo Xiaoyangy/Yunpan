@@ -16,6 +16,7 @@ public class UserService {
 	private UserDao userDao;
 	@Autowired
 	private FileDao fileDao;
+
 	public boolean addUser(User user) {
 		user.setPassword(UserUtils.MD5(user.getPassword()));
 		try {
@@ -48,6 +49,16 @@ public class UserService {
 			return null;
 		}
     }
+	public User findUser(String username) {
+		User user = null;
+		try {
+			user = userDao.findUserByUserName(username);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return user;
+		}
+		return user;
+	}
 
 	public boolean findRepeatUsername(String username) throws Exception {
 		try{

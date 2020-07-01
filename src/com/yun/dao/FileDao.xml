@@ -1,6 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.yun.dao.FileDao">
-    
-    
+<mapper namespace="com.yun.dao.FileDao" >
+	<insert id="insertFiles">
+		insert into File(filePath,userName) values(#{filePath},#{userName})
+	</insert>
+	<delete id="deleteFiles">
+		delete from File where userName = #{userName}
+	</delete>
+	<delete id="deleteFile">
+		delete from File where fileId = #{fileId} and userName = #{userName}
+	</delete>
+	<select id="selectFiles" resultType="com.yun.pojo.RecycleFile">
+		select * from File where userName = #{userName}
+	</select>
+	
+	<select id="selectFile" resultType="com.yun.pojo.RecycleFile">
+		select * from File where fileId = #{fileId}
+	</select>
 </mapper>

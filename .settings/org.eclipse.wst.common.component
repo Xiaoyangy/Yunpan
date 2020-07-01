@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    <wb-module deploy-name="ShareYun">
+    <wb-module deploy-name="yun">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <property name="context-root" value="ShareYun"/>
-        <property name="java-output-path" value="/ShareYun/build/classes"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/config"/>
+        <property name="context-root" value="yun"/>
+        <property name="java-output-path" value="/yun/WebContent/WEB-INF/classes"/>
     </wb-module>
 </project-modules>

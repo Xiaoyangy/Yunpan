@@ -25,14 +25,14 @@ body,html{
 	/*border: solid 1px red;*/
 }
 .slider-panel img{
-	width: 1920px;
-	height: 1080px;
-	opacity: 0.6;
+	width: 1366px;
+	height: 634px;
+	opacity: 0.8;
 	/*border: solid 1px black;*/
 }
 .slider-extra {
 	width: inherit;
-	height: 1000px;
+	height: 500px;
 }
 #slider-title{
 	position: absolute;
@@ -190,11 +190,11 @@ body,html{
 
 #login{
 	position: absolute;
-	height: auto;
-	width: auto;
+	height: 305px;
+	width: 320px;
 	top:0;
 	margin-top:90px;
-    left: 450px;
+    left: 960px;
 	background: white;
 	border: solid 1px white;
 	border-radius: 5px 5px 5px 5px ;
@@ -203,7 +203,7 @@ body,html{
 #form-title{
 	height: 80px;
 	width:320px ;
-	line-height: 180px;
+	line-height: 80px;
 	text-align: center;
 }
 .login-input{

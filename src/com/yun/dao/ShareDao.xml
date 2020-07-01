@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yun.dao.ShareDao" >
+	
+	<select id="findShare" parameterType="com.yun.pojo.Share" resultType="com.yun.pojo.Share">
+		select * from share where shareUrl = #{shareUrl} and status = #{status}
+	</select>
+	
+	<insert id="shareFile" parameterType="com.yun.pojo.Share" >
+		insert into share(shareUrl, path, shareUser) values(#{shareUrl},#{path},#{shareUser})
+	</insert>
+	
+	<select id="findShareByName" resultType="com.yun.pojo.Share">
+		select * from share where shareUser = #{username, jdbcType=VARCHAR} and status = #{status, jdbcType=TINYINT}
+	</select>
+	
+	<update id="cancelShare">
+		update share set status = #{status} where shareUrl = #{url} and path=#{filePath}
+	</update>
+</mapper>
