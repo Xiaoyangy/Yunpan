@@ -88,9 +88,9 @@ public class UserController {
 		if(userService.findRepeatUsername(username))
 		{
      		 System.out.println("用户名已经存在");
-     		 return false;
+     		 return true;
 		}
-		return true;
+		return false;
 	}
 	private boolean checkPasswordNum(String passwd){
 		if(passwd.length()<1) {

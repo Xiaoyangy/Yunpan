@@ -22,6 +22,21 @@
 <%--
  <script type="text/javascript" src="${pageContext.request.contextPath }/js/regist.js"></script>
 --%>
+	<!-- 图片验证码  -->
+	<script src="js/gVerify.js"></script>
+	<script>
+		$(function(){
+			var verifyCode = new GVerify("v_container");
+			document.getElementById("code_input").onblur = function(){
+				var res = verifyCode.validate(document.getElementById("code_input").value);
+				if(res){
+					alert("验证正确");
+				}else{
+					alert("验证码错误");
+				}
+			}
+		})
+	</script>
 <title>注册界面</title>
 </head>
 
