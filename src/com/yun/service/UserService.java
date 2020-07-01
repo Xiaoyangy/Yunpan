@@ -1,5 +1,6 @@
 package com.yun.service;
 
+import com.yun.dao.FileDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -7,11 +8,14 @@ import com.yun.dao.UserDao;
 import com.yun.pojo.User;
 import com.yun.utils.UserUtils;
 
+import java.io.File;
+
 @Service
 public class UserService {
 	@Autowired
 	private UserDao userDao;
-
+	@Autowired
+	private FileDao fileDao;
 	public boolean addUser(User user) {
 		user.setPassword(UserUtils.MD5(user.getPassword()));
 		try {
@@ -44,4 +48,19 @@ public class UserService {
 			return null;
 		}
     }
+
+	public boolean findRepeatUsername(String username) throws Exception {
+		try{
+			if(username!=null){
+				if(username.equals(userDao.findUserByUserName(username).getUsername())) {
+					return false;
+				}
+			}
+
+		}catch (Exception e){
+			e.printStackTrace();
+			return true;
+		}
+		return true;
+	}
 }

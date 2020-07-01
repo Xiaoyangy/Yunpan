@@ -16,4 +16,6 @@ public interface UserDao {
 	User findUserByUserName(String username) throws Exception;
 
 	String getCountSize(String username) throws Exception;
+
+
 }

@@ -19,8 +19,10 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/regist.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
-<%-- <script type="text/javascript" src="${pageContext.request.contextPath }/js/regist.js"></script> --%>
-<title></title>
+<%--
+ <script type="text/javascript" src="${pageContext.request.contextPath }/js/regist.js"></script>
+--%>
+<title>注册界面</title>
 </head>
 
 <body>
@@ -46,14 +48,7 @@
 						<input id="usr" name="username" type="text" placeholder="请设置用户名" /> <span
 							class="clear"></span>
 					</dd>
-					<dd class="mes">
-						<div class="tip">
-							设置后不可更改<br>中英文均可，最长14个英文或7个汉字
-						</div>
-						<div class="error">
-							<span class="error_icon"></span> <span></span>
-						</div>
-					</dd>
+
 				</dl>
 
 				<dl>
@@ -62,21 +57,15 @@
 						<input id="pwd" name="password" type="password" placeholder="请设置登录密码" />
 						<span class="clear"></span>
 					</dd>
-					<dd class="mes">
-						<div class="error">
-							<span class="error_icon"></span> <span></span>
-						</div>
-						<ul>
-							<li><span class="pwd_icon">○</span><span class="pwd_tip">长度为6~14个字符</span>
-							</li>
-							<li><span class="pwd_icon">○</span><span class="pwd_tip">支持数字、大小写字母和标点符号</span>
-							</li>
-							<li><span class="pwd_icon">○</span><span class="pwd_tip">不允许有空格</span>
-							</li>
-						</ul>
-					</dd>
-				</dl>
+					<br />
 
+				</dl>
+				<br />
+				<dl>
+					<dt>验证码</dt>
+
+				</dl>
+				<br />
 				<dl>
 					<dt></dt>
 					<dd class="ipt_box pro">
@@ -89,11 +78,11 @@
 					<dd>
 						<input class="regBtn" type="submit" value="注册" />
 					</dd>
-					<dd class="mes">
+					<%--<dd class="mes">
 						<div class="error agreeErr">
 							<span class="error_icon"></span> <span>您还未接受百度用户协议</span>
 						</div>
-					</dd>
+					</dd>--%>
 				</dl>
 			</form>
 		</div>
