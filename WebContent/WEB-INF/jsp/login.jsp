@@ -73,25 +73,27 @@
 			<div id="form-title">账号密码登录</div>
 			<input type="text" placeholder="用户名" name="username" class="login-input" id="name" />
 			<input type="password" placeholder="密码" name="password" class="login-input" /><br/>
-			<input type="text" class="form-control" id="code_input" placeholder="请输入验证码"/>
-					<span id="v_container"></span><br />
+			<dd class="ipt_box">
+				<input type="text" class="form-control" id="code_input" placeholder="请输入验证码" >
+				<span id="v_container"></span>
+			</dd>
 			<input type="checkbox" class="input" /><span class="ck_text">下次自动登录</span>
 			<input type="submit" value="登录" class="login-btn" /><br/>
- 			<div id="a_div">
+ 		<%--	<div id="a_div">
 			<a href="#" class="a_login">登录遇到问题</a> <a class="a_login" href="#"
 					id="phone">海外手机号</a>
-			</div>
+			</div>--%>
 			<div id="bottom">
 				<div id="inner">
 					<div class="inner">
 						<a href="#" class="a_inner">扫一扫登录</a>
 					</div>
-					<div class="img-login">
+					<%--<div class="img-login">
 						<img src="${pageContext.request.contextPath }/img/weibo.png" width="25" height="25">
 					</div>
 					<div class="img-login">
 						<img src="${pageContext.request.contextPath }/img/qq.png" width="25" height="25">
-					</div>
+					</div>--%>
 					<div>
 						<input type="submit" onclick="return regist()" value="立即注册" class="submit">
 					</div>
