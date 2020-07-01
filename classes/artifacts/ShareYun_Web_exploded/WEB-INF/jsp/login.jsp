@@ -21,6 +21,20 @@
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/login.js"></script>
 <title></title>
+	<script src="js/gVerify.js"></script>
+	<script>
+		$(function(){
+			var verifyCode = new GVerify("v_container");
+			document.getElementById("code_input").onblur = function(){
+				var res = verifyCode.validate(document.getElementById("code_input").value);
+				if(res){
+					alert("验证正确");
+				}else{
+					alert("验证码错误");
+				}
+			}
+		})
+	</script>
 </head>
 
 <body>
@@ -54,7 +68,9 @@
 			<div id="form-title">账号密码登录</div>
 			<input type="text" placeholder="用户名" name="username" class="login-input" id="name" />
 			<input type="password" placeholder="密码" name="password" class="login-input" /><br/>
- 			<input type="checkbox" class="input" /><span class="ck_text">下次自动登录</span>
+			<input type="text" class="form-control" id="code_input" placeholder="请输入验证码" >
+					<span id="v_container" style="width: auto;height: auto"></span><br />
+			<input type="checkbox" class="input" /><span class="ck_text">下次自动登录</span>
 			<input type="submit" value="登录" class="login-btn" /><br/>
  			<div id="a_div">
 			<a href="#" class="a_login">登录遇到问题</a> <a class="a_login" href="#"

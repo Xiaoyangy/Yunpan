@@ -77,9 +77,13 @@
 				</dl>
 				<br />
 				<dl>
-					<dt>验证码</dt>
+							<dt>验证码</dt>
+									<dd class="ipt_box">
+										<input type="text" class="form-control" id="code_input" placeholder="请输入验证码" >
+										<span id="v_container"></span>
+									</dd>
 
-				</dl>
+					</dl>
 				<br />
 				<dl>
 					<dt></dt>
