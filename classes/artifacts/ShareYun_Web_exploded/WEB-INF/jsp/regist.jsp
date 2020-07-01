@@ -19,6 +19,10 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/regist.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <%--
  <script type="text/javascript" src="${pageContext.request.contextPath }/js/regist.js"></script>
 --%>

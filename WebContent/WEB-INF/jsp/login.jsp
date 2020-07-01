@@ -19,7 +19,12 @@
 <meta http-equiv="description" content="This is my page">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/login.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/login.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath }/js/login.js">
+</script>
+	<link rel="stylesheet" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css"/>
+	<script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
 <title></title>
 	<script src="js/gVerify.js"></script>
 	<script>
@@ -68,8 +73,8 @@
 			<div id="form-title">账号密码登录</div>
 			<input type="text" placeholder="用户名" name="username" class="login-input" id="name" />
 			<input type="password" placeholder="密码" name="password" class="login-input" /><br/>
-			<input type="text" class="form-control" id="code_input" placeholder="请输入验证码" >
-					<span id="v_container" style="width: auto;height: auto"></span><br />
+			<input type="text" class="form-control" id="code_input" placeholder="请输入验证码"/>
+					<span id="v_container"></span><br />
 			<input type="checkbox" class="input" /><span class="ck_text">下次自动登录</span>
 			<input type="submit" value="登录" class="login-btn" /><br/>
  			<div id="a_div">
