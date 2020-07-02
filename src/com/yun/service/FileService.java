@@ -39,6 +39,7 @@ public class FileService {
     /**
      * 文件相对前缀
      */
+    private File fileXiangmu = new File("");
     public static final String PREFIX = "WEB-INF" + File.separator + "file" + File.separator;
     /**
      * 新用户注册默认文件夹
@@ -216,7 +217,11 @@ public class FileService {
      * @return
      */
     public String getRootPath(HttpServletRequest request) {
-        return request.getSession().getServletContext().getRealPath("/") + PREFIX;
+    /* return request.getServletContext().getContextPath()+PREFIX;*/
+    /* return System.getProperty("Yunpan.Webapp")+PREFIX;*/
+    System.out.println("pa:"+fileXiangmu.getAbsolutePath()+"WebContent"+File.separator+PREFIX);
+
+        return  fileXiangmu.getAbsolutePath()+"\\WebContent"+File.separator+PREFIX;
     }
 
     /**
@@ -587,10 +592,10 @@ public class FileService {
     public void addNewNameSpace(HttpServletRequest request, String namespace) {
         String fileName = getRootPath(request);
         File file = new File(fileName, namespace);
-        file.mkdir();
+        file.mkdirs();
         for (String newFileName : DEFAULT_DIRECTORY) {
             File newFile = new File(file, newFileName);
-            newFile.mkdir();
+            newFile.mkdirs();
         }
     }
 
