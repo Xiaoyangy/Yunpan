@@ -29,6 +29,7 @@
 <script src="${pageContext.request.contextPath }/js/ckplayer/ckplayer.js"></script>
 <script src="http://static.bcedocument.com/reader/v2/doc_reader_v2.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/index.js"></script>
+
 </head>
 <body>
 	<div class="content">

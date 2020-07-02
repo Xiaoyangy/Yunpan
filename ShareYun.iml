@@ -30,6 +30,17 @@
           <file>file://$MODULE_DIR$/src/applicationContext-service.xml</file>
           <file>file://$MODULE_DIR$/config/spring-mvc.xml</file>
         </fileset>
+        <fileset id="fileset2" name="Spring Application Context" removed="false">
+          <file>file://$MODULE_DIR$/WebContent/WEB-INF/classes/applicationContext-dao.xml</file>
+          <file>file://$MODULE_DIR$/config/applicationContext-dao.xml</file>
+          <file>file://$MODULE_DIR$/src/applicationContext-dao.xml</file>
+          <file>file://$MODULE_DIR$/config/applicationContext-service.xml</file>
+          <file>file://$MODULE_DIR$/WebContent/WEB-INF/classes/applicationContext-service.xml</file>
+          <file>file://$MODULE_DIR$/src/applicationContext-service.xml</file>
+          <file>file://$MODULE_DIR$/WebContent/WEB-INF/classes/spring-mvc.xml</file>
+          <file>file://$MODULE_DIR$/src/spring-mvc.xml</file>
+          <file>file://$MODULE_DIR$/config/spring-mvc.xml</file>
+        </fileset>
       </configuration>
     </facet>
   </component>

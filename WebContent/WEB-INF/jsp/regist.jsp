@@ -1,3 +1,4 @@
+
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
 <%
 	String path = request.getContextPath();
@@ -20,24 +21,104 @@
 <link rel="stylesheet" href="${pageContext.request.contextPath }/css/regist.css" />
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
 <%-- <script type="text/javascript" src="${pageContext.request.contextPath }/js/regist.js"></script> --%>
-<title></title>
+	<style type="text/css">
+		*{
+			margin:0;
+			padding:0;
+		}
+		a{
+			text-decoration: none;
+		}
+		.main_bar{
+			width:100%;
+			height: 350px;
+			margin-top:200px;
+		}
+		.login_form{
+			width:30%;
+			height:80%;
+			margin:0 auto;
+			/*border:2px solid #16A085;*/
+			border-radius: 15px;
+			padding:10px;
+			background: #ECF0F1;
+		}
+		.name,.pwd,.sbm_btn{
+			display:block;
+			width:70%;
+			margin:0 auto;
+			height:35px;
+			font-size:16px;
+			border-color:transparent;
+			border-radius: 5px;
+			border:0;
+			padding-left:8px;
+
+		}
+		.yzm{
+			height: 35px;
+			margin:0 auto;
+			width: 72%;
+			line-height: 35px;
+			position: relative;
+			margin-bottom: 10px;
+		}
+		.code{
+			width:50%;
+			height: 35px;
+			border:0;
+			border-color: transparent;
+			font-size:16px;
+			border-radius: 5px;
+			padding-left: 8px;
+		}
+		.code_pic{
+			display: block;
+			width:40%;
+			height:35px;
+			background-color: #34495e;
+			color:#FFF;
+			position: absolute;
+			top: 0px;
+			left:60%;
+			border-radius: 5px;
+			text-align: center;
+		}
+		.name{
+			margin-top:20px;
+		}
+		.sbm_btn{
+			text-align: center;
+			background-color: #1abc9c;
+			color:#fff;
+			line-height: 35px;
+		}
+		.re_pwd {
+			width: 25%;
+			margin: 10px auto 10px;
+		}
+		.re_pwd a{
+			text-decoration: none;
+			font-size:14px;
+			color: #ccc;
+		}
+		.re_pwd a:hover{
+			cursor: pointer;
+			color:#16A085;
+		}
+		.errorTips{
+			width:70%;
+			color:red;
+			font-size: 14px;
+			margin:0 auto;
+			height: 20px;
+			line-height:20px;
+		}
+	</style>
 	<script src="js/gVerify.js"></script>
-	<script>
-		$(function(){
-			var verifyCode = new GVerify("v_container");
-			document.getElementById("code_input").onblur = function(){
-				var res = verifyCode.validate(document.getElementById("code_input").value);
-				if(res){
-					alert("验证正确");
-				}else{
-					alert("验证码错误");
-				}
-			}
-		})
-	</script>
 </head>
 
-<body>
+<body onload="changeImg()">
 	<!--header开始-->
 	<div class="header">
 		<div class="logo">
@@ -51,6 +132,7 @@
 	<!--header结束-->
 
 	<!--content开始-->
+	${message}
 	<div class="content">
 		<div class="reg">
 			<form action="user/regist.action" method="post">
@@ -69,7 +151,6 @@
 						</div>
 					</dd>
 				</dl>
-
 				<dl>
 					<dt>密码</dt>
 					<dd class="ipt_box">
@@ -92,10 +173,9 @@
 				</dl>
 				<dl>
 					<dt>验证码</dt>
-					<dd class="ipt_box">
-						<input type="text" class="form-control" id="code_input" placeholder="请输入验证码" >
-						<span id="v_container"></span>
-					</dd>
+					<p class="yzm"><input type="text" name="code" id="codeInput" class="code" placeholder="验证码">
+						<span id="code" class="code_pic" title="看不清，换一张"></span></p>
+					<p class="errorTips" id="errorTips"></p>
 				</dl>
 				<dl>
 					<dt></dt>
@@ -107,7 +187,51 @@
 				<dl>
 					<dt></dt>
 					<dd>
-						<input class="regBtn" type="submit" value="注册" />
+						<button href="javascript:;" type="submmit" name="sbm" class="sbm_btn" onclick="return check()">
+							注册</button>
+						<script type="text/javascript">
+							// 声明一个变量用于存储生成的验证码
+							document.getElementById('code').onclick = changeImg;
+							function changeImg(){
+								// 验证码组成库
+								var arrays=new Array(
+										'1','2','3','4','5','6','7','8','9','0',
+										'a','b','c','d','e','f','g','h','i','j',
+										'k','l','m','n','o','p','q','r','s','t',
+										'u','v','w','x','y','z',
+										'A','B','C','D','E','F','G','H','I','J',
+										'K','L','M','N','O','P','Q','R','S','T',
+										'U','V','W','X','Y','Z'
+								);
+								// 重新初始化验证码
+								code ='';
+								// 随机从数组中获取四个元素组成验证码
+								for(var i = 0; i<4; i++){
+									// 随机获取一个数组的下标
+									var r = parseInt(Math.random()*arrays.length);
+									code += arrays[r];
+								}
+								// 验证码写入span区域
+								document.getElementById('code').innerHTML = code;
+
+							}
+
+							// 验证验证码
+							function check(){
+								var error;
+								// 获取用户输入的验证码
+								var codeInput = document.getElementById('codeInput').value;
+								if(codeInput.toLowerCase() == code.toLowerCase()){
+									console.log('123');
+									return true;
+								}else{
+									error = '验证码错误，重新输入';
+									alert("验证码错误");
+									document.getElementById('errorTips').innerHTML = error;
+									return false;
+								}
+							}
+						</script>
 					</dd>
 					<dd class="mes">
 						<div class="error agreeErr">
