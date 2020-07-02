@@ -216,12 +216,13 @@ public class FileService {
      * @param request
      * @return
      */
-    public String getRootPath(HttpServletRequest request) {
+    public String getRootPath(HttpServletRequest request) throws IOException {
     /* return request.getServletContext().getContextPath()+PREFIX;*/
-    /* return System.getProperty("Yunpan.Webapp")+PREFIX;*/
-    System.out.println("pa:"+fileXiangmu.getAbsolutePath()+"WebContent"+File.separator+PREFIX);
-
-        return  fileXiangmu.getAbsolutePath()+"\\WebContent"+File.separator+PREFIX;
+    String rootPath=request.getSession().getServletContext().getRealPath("");
+    rootPath=rootPath.replace("\\classes\\artifacts\\ShareYun_Web_exploded","");
+    rootPath+="/WebContent/";
+    System.out.println(rootPath);
+        return  rootPath+PREFIX;
     }
 
     /**
@@ -230,7 +231,7 @@ public class FileService {
      * @param request
      * @return
      */
-    public String getRecyclePath(HttpServletRequest request) {
+    public String getRecyclePath(HttpServletRequest request) throws IOException {
         return getFileName(request, User.RECYCLE);
     }
 
@@ -241,7 +242,7 @@ public class FileService {
      * @param fileName
      * @return
      */
-    public String getFileName(HttpServletRequest request, String fileName) {
+    public String getFileName(HttpServletRequest request, String fileName) throws IOException {
         if (fileName == null) {
             fileName = "";
         }
@@ -257,7 +258,7 @@ public class FileService {
      * @param username
      * @return
      */
-    public String getFileName(HttpServletRequest request, String fileName, String username) {
+    public String getFileName(HttpServletRequest request, String fileName, String username) throws IOException {
         if (username == null) {
             return getFileName(request, fileName);
         }
@@ -308,7 +309,7 @@ public class FileService {
      *            路径
      * @return
      */
-    public List<FileCustom> listFileForApp(String realPath,HttpServletRequest request,String username) {
+    public List<FileCustom> listFileForApp(String realPath,HttpServletRequest request,String username) throws IOException {
         String preFix = getRootPath(request) + username + File.separator;
         //对文件操作  需要new出一个文件，代表指向该文件内存地址
         File[] files = new File(realPath).listFiles();
@@ -354,14 +355,14 @@ public class FileService {
      *            文件类型
      * @return
      */
-    public List<FileCustom> searchFile(HttpServletRequest request, String currentPath, String reg, String regType) {
+    public List<FileCustom> searchFile(HttpServletRequest request, String currentPath, String reg, String regType) throws IOException {
         List<FileCustom> list = new ArrayList<>();
         matchFile(request, list, new File(getFileName(request, currentPath)), reg, regType == null ? "" : regType);
         return list;
     }
 
     private void matchFile(HttpServletRequest request, List<FileCustom> list, File dirFile, String reg,
-                           String regType) {
+                           String regType) throws IOException {
         File[] listFiles = dirFile.listFiles();
         if (listFiles != null) {
             for (File file : listFiles) {
@@ -442,7 +443,7 @@ public class FileService {
      *            文件夹名
      * @return
      */
-    public boolean addDirectory(HttpServletRequest request, String currentPath, String directoryName) {
+    public boolean addDirectory(HttpServletRequest request, String currentPath, String directoryName) throws IOException {
         File file = new File(getFileName(request, currentPath), directoryName);
         return file.mkdir();
     }
@@ -575,7 +576,7 @@ public class FileService {
      * @param destName
      * @return
      */
-    public boolean renameDirectory(HttpServletRequest request, String currentPath, String srcName, String destName) {
+    public boolean renameDirectory(HttpServletRequest request, String currentPath, String srcName, String destName) throws IOException {
         //根据源文件名  获取  源地址
         File file = new File(getFileName(request, currentPath), srcName);
         //同上
@@ -589,7 +590,7 @@ public class FileService {
      * @param request
      * @param namespace
      */
-    public void addNewNameSpace(HttpServletRequest request, String namespace) {
+    public void addNewNameSpace(HttpServletRequest request, String namespace) throws IOException {
         String fileName = getRootPath(request);
         File file = new File(fileName, namespace);
         file.mkdirs();
@@ -742,7 +743,7 @@ public class FileService {
      * @param request
      * @return
      */
-    public String countFileSize(HttpServletRequest request) {
+    public String countFileSize(HttpServletRequest request) throws IOException {
         long countFileSize = countFileSize(new File(getFileName(request, null)));
         return FileUtils.getDataSize(countFileSize);
     }

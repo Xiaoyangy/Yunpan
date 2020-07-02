@@ -11,6 +11,5 @@ public class asd {
     @Test
     public void fu(){
         File f=new File("");
-    System.out.println(f.getAbsolutePath());
     }
 }

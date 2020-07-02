@@ -126,7 +126,7 @@ public class FileController {
      * @return Json对象
      */
     @RequestMapping("/getFiles")
-    public @ResponseBody Result<List<FileCustom>> getFiles(String path) {
+    public @ResponseBody Result<List<FileCustom>> getFiles(String path) throws IOException {
         String realPath = fileService.getFileName(request, path);
         List<FileCustom> listFile = fileService.listFile(realPath);
         Result<List<FileCustom>> result = new Result<List<FileCustom>>(325,
@@ -194,7 +194,7 @@ public class FileController {
      */
     @RequestMapping("/getShareFiles")
     public @ResponseBody Result<List<FileCustom>> getFiles(String path,
-                                                           String username) {
+                                                           String username) throws IOException {
         String realPath = fileService.getFileName(request, path, username);
         List<FileCustom> listFile = fileService.listFile(realPath);
         Result<List<FileCustom>> result = new Result<List<FileCustom>>(326,
@@ -313,7 +313,7 @@ public class FileController {
      */
     @RequestMapping("/summarylist")
     /* 如果方法声明了注解@ResponseBody ，则会直接将返回值输出到页面。 */
-    public String summarylist(Model model) {
+    public String summarylist(Model model) throws IOException {
         String webrootpath = fileService.getFileName(request, "");
         int number = webrootpath.length();
         SummaryFile rootlist = fileService.summarylistFile(webrootpath, number);
