@@ -36,9 +36,10 @@ public class UserController {
 			HttpSession session = request.getSession();
 			session.setAttribute(User.NAMESPACE, exsitUser.getUsername());
 			session.setAttribute("totalSize", exsitUser.getTotalSize());
+			System.out.println("登陆成功");
 			return "redirect:/index.action";
 		}else{
-     		 System.out.println("登陆失败");
+			System.out.println("登陆失败");
 			request.setAttribute("msg", "用户名或密码错误");
 			return "login";
 		}
