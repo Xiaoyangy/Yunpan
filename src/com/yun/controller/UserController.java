@@ -39,7 +39,7 @@ public class UserController {
 	@RequestMapping("/login")
 	public String login(HttpServletRequest request,HttpServletResponse response, User user) throws ParseException, IOException {
 		User exsitUser = userService.findUser(user);
-		if(exsitUser != null){
+		if(exsitUser != null&&user.getUsername()!=""&&user.getUsername()!=null){
 			HttpSession session = request.getSession();
 			session.setAttribute(User.NAMESPACE, exsitUser.getUsername());
 			session.setAttribute("totalSize", exsitUser.getTotalSize());

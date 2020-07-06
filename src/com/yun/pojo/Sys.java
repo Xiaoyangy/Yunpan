@@ -14,44 +14,53 @@ public class Sys {
     public Sys() { }
     public Sys(String loginTime,String loginName,String des){
         this.des=des;
-        this.loginName=loginName;
-        this.loginTime=loginTime;
+        this.login_name=loginName;
+        this.login_time=loginTime;
     }
-    public String getLoginTime() {
-        return loginTime;
+    private String login_time;
+    private String login_name;
+    private Integer id;
+    private String des;
+    public String getDes() {
+        return des;
     }
 
-    public void setLoginTime(String loginTime) {
-        this.loginTime =  loginTime;
+    public String getLogin_time() {
+        return login_time;
     }
 
-    private String loginTime;
-    private String loginName;
+    public void setLogin_time(String login_time) {
+        this.login_time = login_time;
+    }
+
+    public String getLogin_name() {
+        return login_name;
+    }
 
     @Override
     public String toString() {
         return "Sys{" +
-                "loginTime='" + loginTime + '\'' +
-                ", loginName='" + loginName + '\'' +
+                "login_time='" + login_time + '\'' +
+                ", login_name='" + login_name + '\'' +
+                ", id=" + id +
                 ", des='" + des + '\'' +
                 '}';
     }
 
-    private String des;
-
-    public String getDes() {
-        return des;
+    public void setLogin_name(String login_name) {
+        this.login_name = login_name;
     }
 
     public void setDes(String des) {
         this.des = des;
     }
 
-    public String getLoginName() {
-        return loginName;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setLoginName(String loginName) {
-        this.loginName = loginName;
+
+    public Integer getId() {
+        return id;
     }
 }

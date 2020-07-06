@@ -29,9 +29,48 @@
 <script src="${pageContext.request.contextPath }/js/ckplayer/ckplayer.js"></script>
 <script src="http://static.bcedocument.com/reader/v2/doc_reader_v2.js"></script>
 <script type="text/javascript" src="${pageContext.request.contextPath }/js/index.js"></script>
+	<script type="text/javascript">
+		function startTime(){
+			var today=new Date()
+			var week=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+			var year=today.getYear()
+			var month=today.getMonth()+1
+			var date=today.getDate()
+			var day=today.getDay()
+			var h=today.getHours()
+			var m=today.getMinutes()
+			var s=today.getSeconds()
+			// add a zero in front of numbers<10
+			h=checkTime(h)
+			m=checkTime(m)
+			s=checkTime(s)
+			document.getElementById('time').innerHTML=" "+month+"月"+date+"日  "+week[day]+"  "+h+":"+m+":"+s+" "
+			t=setTimeout('startTime()',500)
+		}
+
+		function checkTime(i){
+			if (i<10)
+			{i="0" + i}
+			return i
+		}
+		function time(){
+			today=new Date();
+			function initArray(){
+				this.length=initArray.arguments.length
+				for(var i=0;i<this.length;i++)
+					this[i+1]=initArray.arguments[i];
+			}
+			var d=new initArray(" 星期日"," 星期一"," 星期二"," 星期三"," 星期四"," 星期五"," 星期六");
+			var month=today.getMonth()+1;
+			var day=today.getDate();
+			var str = month+"月"+day+"日"+d[today.getDay()+1];
+			return str;
+		}
+	</script>
 
 </head>
-<body>
+<body onload="startTime()">
+
 	<div class="content">
 		<div class="top">
 			<%@include file="top.jsp"%>
@@ -44,7 +83,6 @@
 				<jsp:include page="main.jsp"></jsp:include>
 			</div>
 		</div>
- 
 	</div>
 	<%@include file="tab.jsp" %>
 </body>

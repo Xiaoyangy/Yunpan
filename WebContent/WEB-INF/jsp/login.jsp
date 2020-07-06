@@ -121,23 +121,17 @@
 <body onload="changeImg()">
 	<div id="slider-title">
 		<img src="${pageContext.request.contextPath }/img/logo.png" height="45" width="45" />
-		<div id="title-logo">yun网盘</div>
+		<div id="title-logo">网盘</div>
 	</div>
 	<div class="slider">
 		<ul class="slider-main">
 			<li class="slider-panel"><a href="#" ><img
-					alt="yun网盘" title="yun网盘" src="${pageContext.request.contextPath }/img/a.jpg"></a></li>
+					alt="网盘" title="yun网盘" src="https://uploadbeta.com/api/pictures/random/?key=BingEveryday "></a></li>
 			<li class="slider-panel"><a href="#" ><img
-					alt="yun网盘"   src="${pageContext.request.contextPath }/img/d.jpg"></a></li>
-			<li class="slider-panel"><a href="#" ><img
-					alt="yun网盘" title="yun网盘" src="${pageContext.request.contextPath }/img/g.jpg"></a></li>
-			<li class="slider-panel"><a href="#" ><img
-					alt="yun网盘" title="yun网盘" src="${pageContext.request.contextPath }/img/f.jpg"></a></li>
+					alt="网盘"   src="http://lorempixel.com/1920/1080"></a></li>
 		</ul>
 		<div class="slider-extra">
 			<ul class="slider-nav">
-				<li class="slider-item"></li>
-				<li class="slider-item"></li>
 				<li class="slider-item"></li>
 				<li class="slider-item"></li>
 			</ul>
