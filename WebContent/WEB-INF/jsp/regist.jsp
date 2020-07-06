@@ -130,9 +130,7 @@
 		<div class="hr"></div>
 	</div>
 	<!--header结束-->
-
 	<!--content开始-->
-	${message}
 	<div class="content">
 		<div class="reg">
 			<form action="user/regist.action" method="post">

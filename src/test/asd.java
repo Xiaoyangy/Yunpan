@@ -1,6 +1,13 @@
+import com.yun.pojo.Sys;
+import com.yun.service.SysService;
+import com.yun.service.UserService;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.List;
 
 /**
  * @author 陈宏阳
@@ -8,8 +15,12 @@ import java.io.File;
  * Yunpan
  */
 public class asd {
+    @Autowired
+    private SysService sysService;
     @Test
-    public void fu(){
-        File f=new File("");
+    public void fu() throws ParseException {
+        String username="a";
+        sysService.loginTime(username);
+        List<Sys> sysList=sysService.selectAll();
     }
 }

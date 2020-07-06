@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.yun.service.FileService;
+import com.yun.service.SysService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import com.yun.pojo.User;
 import com.yun.service.UserService;
 
 import java.io.PrintWriter;
+import java.text.ParseException;
 
 @Controller
 @RequestMapping("/user")
@@ -22,6 +24,8 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private FileService fileService;
+	@Autowired
+	private SysService sysService;
 	/**
 	 * 登录
 	 * 
@@ -30,13 +34,14 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/login")
-	public String login(HttpServletRequest request, User user) {
+	public String login(HttpServletRequest request, User user) throws ParseException {
 		User exsitUser = userService.findUser(user);
 		if(exsitUser != null){
 			HttpSession session = request.getSession();
 			session.setAttribute(User.NAMESPACE, exsitUser.getUsername());
 			session.setAttribute("totalSize", exsitUser.getTotalSize());
 			System.out.println("登陆成功");
+			sysService.loginTime(exsitUser.getUsername());
 			return "redirect:/index.action";
 		}else{
 			System.out.println("登陆失败");
