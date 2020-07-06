@@ -67,6 +67,7 @@ public class UserController {
 				if(isSuccess){
 					System.out.println("注册成功");
 					fileService.addNewNameSpace(request, user.getUsername());
+					sysService.registTime(user.getUsername());
 					return "login";
 				}else{
 				request.setAttribute("注册失败2", "注册失败2");

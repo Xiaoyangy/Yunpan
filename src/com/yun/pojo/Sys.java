@@ -11,15 +11,9 @@ import java.sql.Timestamp;
  */
 public class Sys {
 
-    @Override
-    public String toString() {
-        return "Sys{" +
-                "loginTime='" + loginTime + '\'' +
-                ", loginName='" + loginName + '\'' +
-                '}';
-    }
     public Sys() { }
-    public Sys(String loginTime,String loginName){
+    public Sys(String loginTime,String loginName,String des){
+        this.des=des;
         this.loginName=loginName;
         this.loginTime=loginTime;
     }
@@ -33,6 +27,25 @@ public class Sys {
 
     private String loginTime;
     private String loginName;
+
+    @Override
+    public String toString() {
+        return "Sys{" +
+                "loginTime='" + loginTime + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", des='" + des + '\'' +
+                '}';
+    }
+
+    private String des;
+
+    public String getDes() {
+        return des;
+    }
+
+    public void setDes(String des) {
+        this.des = des;
+    }
 
     public String getLoginName() {
         return loginName;

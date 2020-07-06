@@ -30,9 +30,26 @@ public class SysService {
         Timestamp d= new Timestamp(System.currentTimeMillis());
         String time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(d);
         try {
-              Sys sys=new Sys(time,username);
+              Sys sys=new Sys(time,username,"登录");
               sysDao.insertSysTime(sys);
               System.out.println("success");
+        } catch (Exception e) {
+            System.out.println("log false");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+    /*
+     * 记录注册时间
+     * */
+    public boolean registTime(String username) throws ParseException {
+        Timestamp d= new Timestamp(System.currentTimeMillis());
+        String time=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(d);
+        try {
+            Sys sys=new Sys(time,username,"注册");
+            sysDao.insertSysTime(sys);
+            System.out.println("success");
         } catch (Exception e) {
             System.out.println("log false");
             e.printStackTrace();

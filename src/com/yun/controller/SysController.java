@@ -20,7 +20,7 @@ public class SysController {
     private SysService sysService;
     @RequestMapping("/syslog")
     public String Syslog(HttpServletRequest httpServletRequest, Sys sys){
-
+        
         return "log";
     }
 }

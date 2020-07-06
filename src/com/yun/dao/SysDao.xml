@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yun.dao.SysDao">
    <insert id="insertSysTime" parameterType="com.yun.pojo.Sys">
-     insert into system_log(login_time, login_name) values(#{loginTime}, #{loginName})
+     insert into system_log(login_time, login_name,des) values(#{loginTime}, #{loginName} ,#{des})
 </insert>
 <select id="selectAll" resultType="com.yun.pojo.Sys">
         select * from system_log
