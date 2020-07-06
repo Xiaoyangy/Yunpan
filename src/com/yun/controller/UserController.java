@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.yun.pojo.User;
 import com.yun.service.UserService;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
 
@@ -33,19 +34,27 @@ public class UserController {
 	 * @param user
 	 * @return
 	 */
+	private static int loFlag=0;
+	private static int reFlag=0;
 	@RequestMapping("/login")
-	public String login(HttpServletRequest request, User user) throws ParseException {
+	public String login(HttpServletRequest request,HttpServletResponse response, User user) throws ParseException, IOException {
 		User exsitUser = userService.findUser(user);
 		if(exsitUser != null){
 			HttpSession session = request.getSession();
 			session.setAttribute(User.NAMESPACE, exsitUser.getUsername());
 			session.setAttribute("totalSize", exsitUser.getTotalSize());
 			System.out.println("登陆成功");
+			loFlag=0;
 			sysService.loginTime(exsitUser.getUsername());
 			return "redirect:/index.action";
 		}else{
 			System.out.println("登陆失败");
-			request.setAttribute("msg", "用户名或密码错误");
+			if(loFlag==1){
+			response.setContentType("text/html; charset=UTF-8");
+		//	response.getWriter().write("<script>alert('登录失败');</script>");
+		//	response.getWriter().flush();
+			}
+			loFlag=1;
 			return "login";
 		}
 	}
@@ -57,10 +66,13 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/regist")
-	public String regist(HttpServletRequest request, User user) throws Exception {
+	public String regist(HttpServletRequest request,HttpServletResponse response, User user) throws Exception {
 		if (!checkUser(user)) {
 			System.out.println("注册失败");
-			request.setAttribute("注册失败1", "注册失败1");
+			response.setContentType("text/html; charset=UTF-8");
+			if(reFlag==1){
+			response.getWriter().write("<script>alert('注册失败');</script>");}
+			reFlag=1;
 			return "regist";
 		} else {
 				boolean isSuccess = userService.addUser(user);
@@ -68,9 +80,15 @@ public class UserController {
 					System.out.println("注册成功");
 					fileService.addNewNameSpace(request, user.getUsername());
 					sysService.registTime(user.getUsername());
+					response.setContentType("text/html; charset=UTF-8");
+					response.getWriter().write("<script>alert('注册成功'); window.location='login.action'; window.close();</script>");
+					response.getWriter().flush();
+					reFlag=0;
 					return "login";
 				}else{
-				request.setAttribute("注册失败2", "注册失败2");
+					response.setContentType("text/html; charset=UTF-8");
+					response.getWriter().write("<script>alert('注册失败'); window.location='regist.action'; window.close();</script>");
+					response.getWriter().flush();
 				return "regist";
 				}
 		}

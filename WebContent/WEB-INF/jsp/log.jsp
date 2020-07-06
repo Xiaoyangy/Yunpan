@@ -12,6 +12,11 @@
 </head>
 <body>
 <from>
+    <tr><th>id</th>id
+    <th>username</th>
+    <th>time</th>
+    </tr>
+
 
 </from>
 </body>
