@@ -64,6 +64,10 @@
         <jarDirectory url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="doc_reader_v2" level="application" />
+    <orderEntry type="library" exported="" name="doc_reader_v2" level="application" />
+    <orderEntry type="library" exported="" name="bootstrap" level="application" />
+    <orderEntry type="library" exported="" name="font-awesome" level="application" />
+    <orderEntry type="library" exported="" name="jquery" level="application" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 9.0.35" level="application_server_libraries" />
   </component>
 </module>

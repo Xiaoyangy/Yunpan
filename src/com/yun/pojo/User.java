@@ -12,6 +12,19 @@ public class User {
 	private String username;
 	private String password;
 	private String countSize;
+
+	@Override
+	public String toString() {
+		return "User{" +
+				"id=" + id +
+				", username='" + username + '\'' +
+				", password='" + password + '\'' +
+				", countSize='" + countSize + '\'' +
+				", totalSize='" + totalSize + '\'' +
+				", vip=" + vip +
+				'}';
+	}
+
 	private String totalSize;
 	public Integer getVip() {
 		return vip;

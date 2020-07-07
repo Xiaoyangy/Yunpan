@@ -20,7 +20,6 @@ public class UserService {
 	private FileDao fileDao;
 
 	public boolean addUser(User user) {
-		user.setPassword(UserUtils.MD5(user.getPassword()));
 		try {
 			userDao.addUser(user);
 		} catch (Exception e) {
@@ -43,7 +42,6 @@ public class UserService {
 
     public User findUser(User user) {
 		try {
-			user.setPassword(UserUtils.MD5(user.getPassword()));
 			User exsitUser = userDao.findUser(user);
 			return exsitUser;
 		} catch (Exception e) {

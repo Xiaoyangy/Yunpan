@@ -16,12 +16,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yun.pojo.User;
 import com.yun.service.UserService;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
 
+import com.google.code.kaptcha.Constants;
 @Controller
 @RequestMapping("/user")
 public class UserController {
@@ -41,59 +45,53 @@ public class UserController {
 	private static int loFlag=0;
 	private static int reFlag=0;
 	@RequestMapping("/login")
-	public String login(HttpServletRequest request,HttpServletResponse response, User user) throws ParseException, IOException {
-		User exsitUser = userService.findUser(user);
-		if(exsitUser != null&&user.getUsername()!=""&&user.getUsername()!=null){
+	public @ResponseBody Result<String> login(HttpServletRequest request, String username,String password) throws ParseException, IOException {
+		password=UserUtils.MD5(password);
+		User exsitUser = userService.findUser(username);
+    	System.out.println(username+":"+password);
+    	System.out.println(exsitUser.toString());
+		if(exsitUser.getUsername().equals(username) && exsitUser.getPassword().equals(password)){
 			HttpSession session = request.getSession();
 			session.setAttribute(User.NAMESPACE, exsitUser.getUsername());
 			session.setAttribute("totalSize", exsitUser.getTotalSize());
 			System.out.println("登陆成功");
-			loFlag=0;
 			sysService.loginTime(exsitUser.getUsername());
-			return "redirect:/index.action";
+			return new Result<>(111,true,"true");
+
 		}else{
 			System.out.println("登陆失败");
-			if(loFlag==1){
-			response.setContentType("text/html; charset=UTF-8");
-		//	response.getWriter().write("<script>alert('登录失败');</script>");
-		//	response.getWriter().flush();
-			}
-			loFlag=1;
-			return "login";
+			System.out.println("密码错误");
+			return new Result<>(112,false,"false");
+
 		}
 	}
 
 	/**
 	 * 注册
 	 * @param request
-	 * @param user
+	 * @param
 	 * @return
 	 */
 	@RequestMapping("/regist")
-	public String regist(HttpServletRequest request,HttpServletResponse response, User user) throws Exception {
+	public @ResponseBody Result<String> regist(HttpServletRequest request,HttpServletResponse response, String username,String password) throws Exception {
+		User user=new User();
+		user.setUsername(username);
+		password=UserUtils.MD5(password);
+		user.setPassword(password);
+		user.setVip(0);
+		System.out.println(user);
 		if (!checkUser(user)) {
 			System.out.println("注册失败");
-			response.setContentType("text/html; charset=UTF-8");
-			if(reFlag==1){
-			response.getWriter().write("<script>alert('注册失败');</script>");}
-			reFlag=1;
-			return "regist";
+			return new Result<>(902,false,"false");
 		} else {
 				boolean isSuccess = userService.addUser(user);
 				if(isSuccess){
 					System.out.println("注册成功");
 					fileService.addNewNameSpace(request, user.getUsername());
 					sysService.registTime(user.getUsername());
-					response.setContentType("text/html; charset=UTF-8");
-					response.getWriter().write("<script>alert('注册成功'); window.location='login.action'; window.close();</script>");
-					response.getWriter().flush();
-					reFlag=0;
-					return "login";
+					return new Result<>(901,true,"true");
 				}else{
-					response.setContentType("text/html; charset=UTF-8");
-					response.getWriter().write("<script>alert('注册失败'); window.location='regist.action'; window.close();</script>");
-					response.getWriter().flush();
-				return "regist";
+					return new Result<>(902,false,"false");
 				}
 		}
 
@@ -158,7 +156,7 @@ public class UserController {
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
-		return "redirect:/user/login.action";
+		return "login";
 	}
 	/*会员中心*/
 	@RequestMapping("/personalcenter")

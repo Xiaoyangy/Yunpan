@@ -13,7 +13,7 @@
 	</select>
 	
 	<insert id="addUser" parameterType="com.yun.pojo.User">
-		insert into user(username, password) values(#{username}, #{password})
+		insert into user(username, password,vip) values(#{username}, #{password}, #{vip})
 	</insert>
 	
 	<update id="reSize">

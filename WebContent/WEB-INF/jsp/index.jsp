@@ -123,7 +123,6 @@
 			return false;
 		}
 		function vipF() {
-
 		}
 	</script>
 

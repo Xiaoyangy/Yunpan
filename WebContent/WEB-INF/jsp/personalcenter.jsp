@@ -5,131 +5,150 @@
   Time: 11:26
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@page import="java.util.List"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title>个人中心</title>
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="cache-control" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
-    <meta http-equiv="description" content="This is my page">
-    <link href="${pageContext.request.contextPath }/css/lightbox.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath }/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath }/css/layer.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath }/css/index.css" rel="stylesheet">
-    <script src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
-    <script src="${pageContext.request.contextPath }/js/lightbox.js"></script>
-    <script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
-    <script src="${pageContext.request.contextPath }/js/layer.js"></script>
-    <script src="${pageContext.request.contextPath }/js/ckplayer/ckplayer.js"></script>
-    <script src="http://static.bcedocument.com/reader/v2/doc_reader_v2.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath }/js/index.js"></script>
-    <script>
-        var editPassword = function(){
-            $("#password1").blur(function(){
-                var num=$("#password1").val().length;
-                if(num<6){
-                    $("#tip2").html("<font color=\"red\" size=\"2\">  太短了</font>");
-                }
-                else if(num>18){
-                    $("#tip2").html("<font color=\"red\" size=\"2\">  太长了</font>");
-                }
-                else{
-                    $("#tip2").html("<font color=\"green\" size=\"2\"> OK</font>");
-                }
-            }) ;
+<title>个人中心</title>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
+<meta http-equiv="description" content="This is my page">
+<link href="${pageContext.request.contextPath }/css/lightbox.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/layer.css"
+	rel="stylesheet">
+<link href="${pageContext.request.contextPath }/css/index.css"
+	rel="stylesheet">
+<script src="${pageContext.request.contextPath }/js/jquery.min.js"></script>
+<script src="${pageContext.request.contextPath }/js/lightbox.js"></script>
+<script src="${pageContext.request.contextPath }/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath }/js/layer.js"></script>
+<script
+	src="${pageContext.request.contextPath }/js/ckplayer/ckplayer.js"></script>
+<script src="http://static.bcedocument.com/reader/v2/doc_reader_v2.js"></script>
+<script type="text/javascript"
+	src="${pageContext.request.contextPath }/js/index.js"></script>
+<style type="text/css">
+.table {
+	width: 50%;
+	left: 350px;
+	position: absolute;
+}
 
-            $("#password2").blur(function(){
-                var tmp=$("#password1").val();
-                var num=$("#password2").val().length;
-                if($("#password2").val()!=tmp){
-                    $("#tip3").html("<font color=\"red\" size=\"2\">  和第一次输入不同</font>");
-                }
-                else{
-                    if(num>=6&&num<=18){
-                        $("#tip3").html("<font color=\"green\" size=\"2\">  OK</font>");
-                    }
-                    else{
-                        $("#tip3").html("<font color=\"red\" size=\"2\">  太短或太长</font>");
-                    }
-                }
-            });
+th, td {
+	text-align: center;
+}
+</style>
+<script>
+	var editPassword = function() {
+		$("#password1").blur(function() {
+			var num = $("#password1").val().length;
+			if (num < 6) {
+				$("#tip2").html("<font color=\"red\" size=\"2\"> 太短了</font>");
+			} else if (num > 18) {
+				$("#tip2").html("<font color=\"red\" size=\"2\"> 太长了</font>");
+			} else {
+				$("#tip2").html("<font color=\"green\" size=\"2\">OK</font>");
+			}
+		});
 
-            $("#updatePassword").modal();
-        }
-    </script>
-    <script>
-        var submitPassword = function(){
-            var flag=true;
-            var old=$("#oldpassword").val();
-            var pass=$("#password1").val();
-            var pass2=$("#password2").val();
-            var num1=$("#password1").val().length;
-            var num2=$("#password2").val().length;
-            if(num1!=num2||num1<2||num2<2||num1>18||num2>18||pass!=pass2){
-                flag=false;
-            }
-            else{
-                flag=true;
-            }
-            if(flag){
-                $.ajax({
-                    type:'POST',
-                    url:'/user/password.action',
-                    data:{old:old,
-                          newpass:pass
-                    },
-                    success:function(result){
-                        if(result.code === 101){
-                            alert("修改成功");
-                            $("#updatePassword").modal('hide');
-                            $("#oldpassword").val("");
-                            $("#password1").val("");
-                            $("#password2").val("");
-                            $("#tip1").empty();
-                            $("#tip2").empty();
-                            $("#tip3").empty();
-                        }
-                        else{
-                            alert("修改失败");
-                        }
-                    }
-                });
-            }
-            else{
-                alert("请输入正确数据");
-            }
-        }
-    </script>
-    <script>
-    var updateVip= function () {
-        $("#updateVip").modal();
-    }
-    </script>
-    <script>
-        var payVip=function () {
-            var vipUpdata=$("#redemptionCode").val();
-            $.ajax({
-                type:'POST',
-                url:'/user/vip.action',
-                data:{
-                    vipUpdata:vipUpdata
-                },
-                success:function(result){
-                    if(result.code === 201){
-                        alert("兑换成功");
-                    }
-                    else{
-                        alert("兑换失败");
-                    }
-                }
-            });
-        }
-    </script>
+		$("#password2")
+				.blur(
+						function() {
+							var tmp = $("#password1").val();
+							var num = $("#password2").val().length;
+							if ($("#password2").val() != tmp) {
+								$("#tip3")
+										.html(
+												"<font color=\"red\" size=\"2\">  和第一次输入不同</font>");
+							} else {
+								if (num >= 6 && num <= 18) {
+									$("#tip3")
+											.html(
+													"<font color=\"green\" size=\"2\">  OK</font>");
+								} else {
+									$("#tip3")
+											.html(
+													"<font color=\"red\" size=\"2\">  太短或太长</font>");
+								}
+							}
+						});
+
+		$("#updatePassword").modal();
+	}
+</script>
+<script>
+	var submitPassword = function() {
+		var flag = true;
+		var old = $("#oldpassword").val();
+		var pass = $("#password1").val();
+		var pass2 = $("#password2").val();
+		var num1 = $("#password1").val().length;
+		var num2 = $("#password2").val().length;
+		if (num1 != num2 || num1 < 2 || num2<2||num1>18 || num2 > 18
+				|| pass != pass2) {
+			flag = false;
+		} else {
+			flag = true;
+		}
+		if (flag) {
+			$.ajax({
+				type : 'POST',
+				url : '/user/password.action',
+				data : {
+					old : old,
+					newpass : pass
+				},
+				success : function(result) {
+					if (result.code === 101) {
+						alert("修改成功");
+						$("#updatePassword").modal('hide');
+						$("#oldpassword").val("");
+						$("#password1").val("");
+						$("#password2").val("");
+						$("#tip1").empty();
+						$("#tip2").empty();
+						$("#tip3").empty();
+					} else {
+						alert("修改失败");
+					}
+				}
+			});
+		} else {
+			alert("请输入正确数据");
+		}
+	}
+</script>
+<script>
+	var updateVip = function() {
+		$("#updateVip").modal();
+	}
+</script>
+<script>
+	var payVip = function() {
+		var vipUpdata = $("#redemptionCode").val();
+		$.ajax({
+			type : 'POST',
+			url : '/user/vip.action',
+			data : {
+				vipUpdata : vipUpdata
+			},
+			success : function(result) {
+				if (result.code === 201) {
+					alert("兑换成功");
+				} else {
+					alert("兑换失败");
+				}
+			}
+		});
+	}
+</script>
 </head>
 <body>
 <from>
