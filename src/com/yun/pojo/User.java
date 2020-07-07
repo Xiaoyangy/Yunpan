@@ -13,6 +13,14 @@ public class User {
 	private String password;
 	private String countSize;
 	private String totalSize;
+	public Integer getVip() {
+		return vip;
+	}
+	public void setVip(Integer vip) {
+		this.vip = vip;
+	}
+	private Integer vip;
+
 	public String getCountSize() {
 		return countSize;
 	}

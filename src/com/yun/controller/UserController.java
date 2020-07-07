@@ -9,6 +9,7 @@ import com.yun.service.SysService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yun.pojo.User;
@@ -155,6 +156,31 @@ public class UserController {
 	public String logout(HttpServletRequest request) {
 		request.getSession().invalidate();
 		return "redirect:/user/login.action";
+	}
+	/*会员中心*/
+	@RequestMapping("/personalcenter")
+	public String personalCenter(HttpServletRequest request,Model model){
+   		 System.out.println(request.getSession().getAttribute("username"));
+   		 String username= (String) request.getSession().getAttribute("username");
+		User user1=userService.findUser(username);
+		model.addAttribute("id",user1.getId());
+		model.addAttribute("username",user1.getUsername());
+		model.addAttribute("totalsize",user1.getTotalSize());
+		model.addAttribute("countsize",user1.getCountSize());
+		model.addAttribute("vip",user1.getVip());
+
+		return "personalcenter";
+	}
+	/*修改密码*/
+	@RequestMapping("/password")
+	public String password(HttpServletRequest request){
+
+		return "passwo";
+	}
+	/*升级VIP*/
+	@RequestMapping("/vip")
+	public String vip(HttpServletRequest request){
+		return "vip";
 	}
 	/**
 	 * 登录-移动端
