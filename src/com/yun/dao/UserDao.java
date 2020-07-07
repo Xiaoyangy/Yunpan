@@ -17,5 +17,6 @@ public interface UserDao {
 
 	String getCountSize(String username) throws Exception;
 
+	void updatePassword(@Param("username") String username, @Param("password") String password);
 
 }

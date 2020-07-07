@@ -4,8 +4,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yun.pojo.Result;
 import com.yun.service.FileService;
 import com.yun.service.SysService;
+import com.yun.utils.UserUtils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.yun.pojo.User;
 import com.yun.service.UserService;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -173,9 +176,26 @@ public class UserController {
 	}
 	/*修改密码*/
 	@RequestMapping("/password")
-	public String password(HttpServletRequest request){
-
-		return "passwo";
+	public @ResponseBody Result<String> password(HttpServletRequest request,String old, String newpass){
+    	System.out.println("Controller OK");
+		String username=(String) request.getSession().getAttribute("username");
+		String opssWord=userService.findUser(username).getPassword();
+			old= UserUtils.MD5(old);
+   		 System.out.println(old);
+		if(opssWord.equals(old)){
+			newpass=UserUtils.MD5(newpass);
+    		  System.out.println(newpass);
+			if(userService.updatePassword(username,newpass)) {
+      			  System.out.println("密码修改成功");
+				return new Result<>(101,true,"success");
+			}else{
+				return new Result<>(102,false,"false");
+			}
+		}
+		else{
+    		  System.out.println("新旧密码不同");
+				return new Result<>(102,false,"false");
+		}
 	}
 	/*升级VIP*/
 	@RequestMapping("/vip")

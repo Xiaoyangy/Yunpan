@@ -19,4 +19,8 @@
 	<update id="reSize">
 		update user set countSize = #{formatSize} where username = #{username}
 	</update>
+
+	<update id="updatePassword">
+		update user set password = #{password} where username = #{username}
+	</update>
 </mapper>

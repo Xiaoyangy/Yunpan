@@ -60,7 +60,15 @@ public class UserService {
 		}
 		return user;
 	}
-
+	public boolean updatePassword(String username,String password){
+		try{
+			userDao.updatePassword(username,password);
+			return true;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
 	public boolean findRepeatUsername(String username) throws Exception {
 		try{
 			if(username!=null){
