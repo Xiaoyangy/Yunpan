@@ -12,7 +12,6 @@
 <html>
 <head>
     <title>个人中心</title>
-
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
     <meta http-equiv="expires" content="0">
@@ -106,6 +105,31 @@
             }
         }
     </script>
+    <script>
+    var updateVip= function () {
+        $("#updateVip").modal();
+    }
+    </script>
+    <script>
+        var payVip=function () {
+            var vipUpdata=$("#redemptionCode").val();
+            $.ajax({
+                type:'POST',
+                url:'/user/vip.action',
+                data:{
+                    vipUpdata:vipUpdata
+                },
+                success:function(result){
+                    if(result.code === 201){
+                        alert("兑换成功");
+                    }
+                    else{
+                        alert("兑换失败");
+                    }
+                }
+            });
+        }
+    </script>
 </head>
 <body>
 <from>
@@ -133,7 +157,7 @@
         </tbody>
     </table>
     <br/>
-    <button onclick="editPassword()" class="btn btn-group-xs btn-flat" style="float:right">修改密码</button>
+    <button onclick="editPassword()" class="btn btn-warning btn-flat" style="float:right">修改密码</button>
     <div class="modal fade" id="updatePassword" tabindex="-1">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -169,8 +193,29 @@
         </div>
     </div>
     <br />
-    <a href="/user/vip.action" style="float:right" type="button" class="btn btn-primary">升级vip</a>
+    <button onclick="updateVip()" class="btn btn-primary btn-flat" style="float:right">升级vip</button>
     <div class="modal fade" id="updateVip" tabindex="-1">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="vipModel">Vip兑换</h4>
+                </div>
+                <div class="modal-body">
+                    <form name = "editForm">
+                        <div class="form-group">
+                            <input  type='text' id="redemptionCode"  class="form-control" name="redemptionCode" required placeholder="兑换码">
+                            <div style="display: inline" id="tip5"></div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button onclick="payVip()" class="btn btn-primary" ng-disabled="editForm.$invalid">确定</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+                </form>
+            </div>
+    </div>
     </div>
 </from>
 </body>

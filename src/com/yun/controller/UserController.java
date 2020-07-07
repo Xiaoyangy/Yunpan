@@ -199,8 +199,16 @@ public class UserController {
 	}
 	/*升级VIP*/
 	@RequestMapping("/vip")
-	public String vip(HttpServletRequest request){
-		return "vip";
+	public @ResponseBody Result<String> vip(HttpServletRequest request,String vipUpdata){
+		String username=(String) request.getSession().getAttribute("username");
+		if(userService.findVipCode(vipUpdata)){
+		if(userService.updataVip(username,vipUpdata)){
+			return new Result<>(201,true,"true");
+		}else{
+		return new Result<>(202,false,"false");}}
+		else{
+			return new Result<>(202,false,"false");
+		}
 	}
 	/**
 	 * 登录-移动端

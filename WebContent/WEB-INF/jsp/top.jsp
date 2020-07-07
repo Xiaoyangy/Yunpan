@@ -1,8 +1,9 @@
 <%@ page language="java" import="java.util.*" pageEncoding="UTF-8"%>
-
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 	<nav class="navbar navbar-default navbar-fixed-top"
 		style="background-color: #EFF4F8; margin-bottom: 0px; height: 10%; z-index: 50">
 	<div class="container">
+		<div id="vip" ONCLICK="p">Vip</div>
 		<div id="time"></div>
 		<div class="navbar-header" style="float:left;">
 			<span style="float: left;">
@@ -15,6 +16,7 @@
 			<a class="navbar-brand" href="share.jsp">分享</a> <a
 				class="navbar-brand" href="more.jsp" target="main">更多</a>
 		</div>
+
 		<div id="navbar" style="float: right;">
 			<ul class="nav navbar-nav">
 				<li class="dropdown" style="width:100px">

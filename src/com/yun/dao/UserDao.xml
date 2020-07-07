@@ -23,4 +23,14 @@
 	<update id="updatePassword">
 		update user set password = #{password} where username = #{username}
 	</update>
+
+	<update id="updateVip">
+		update user set vip = 1 where username = #{username}
+	</update>
+	<update id="updateVipStatus">
+	    update vip set status = 0 where code = #{code}
+    </update>
+	<select id="findVip" resultType="com.yun.pojo.Vip">
+	select * from vip where code=#{vipCode}
+</select>
 </mapper>

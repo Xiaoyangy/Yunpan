@@ -1,5 +1,6 @@
 package com.yun.dao;
 
+import com.yun.pojo.Vip;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +19,11 @@ public interface UserDao {
 	String getCountSize(String username) throws Exception;
 
 	void updatePassword(@Param("username") String username, @Param("password") String password);
+
+	void updateVip(@Param("username") String username);
+
+	void updateVipStatus(@Param("code") String code);
+
+	Vip findVip(@Param("vipCode") String vipCode);
 
 }

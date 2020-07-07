@@ -1,6 +1,7 @@
 package com.yun.service;
 
 import com.yun.dao.FileDao;
+import com.yun.pojo.Vip;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -50,6 +51,7 @@ public class UserService {
 			return null;
 		}
     }
+
 	public User findUser(String username) {
 		User user = null;
 		try {
@@ -60,6 +62,7 @@ public class UserService {
 		}
 		return user;
 	}
+
 	public boolean updatePassword(String username,String password){
 		try{
 			userDao.updatePassword(username,password);
@@ -69,6 +72,28 @@ public class UserService {
 		}
 		return false;
 	}
+
+	public boolean updataVip(String username,String vipcode){
+		try{
+			userDao.updateVip(username);
+			userDao.updateVipStatus(vipcode);
+			return true;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	public boolean findVipCode(String Code){
+		try{
+			Vip vip=userDao.findVip(Code);
+			return vip.getCode().equals(Code) && vip.getStatus() != 0;
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return false;
+	}
+
 	public boolean findRepeatUsername(String username) throws Exception {
 		try{
 			if(username!=null){

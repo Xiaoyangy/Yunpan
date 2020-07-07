@@ -122,6 +122,9 @@
 			}
 			return false;
 		}
+		function vipF() {
+
+		}
 	</script>
 
 </head>
