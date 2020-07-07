@@ -57,7 +57,7 @@
 											+ '<td><a href="#" prepath='+ currentPath +' fileType="'+ this.fileType+ '" onclick="return preDirectory(this)"><span class="glyphicon glyphicon-'+ this.fileType +'" style="padding-right: 10px"></span>'+ this.fileName+ '</a></td>'
 											+ '<td width="32px"><a href="#" class="glyphicon glyphicon-download-alt" title="下载" onclick="return downloadFile(this)"></a></td>'
 											+ '<td>'+ this.fileSize+ '</td>'
-											+ '<td>'+ this.lastTime+ '</td>'
+											+ '<td>'+ this.nowTime+ '</td>'
 											+ '</tr>');
 					});
 				}

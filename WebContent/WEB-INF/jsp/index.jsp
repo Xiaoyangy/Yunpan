@@ -28,7 +28,7 @@
 <script src="${pageContext.request.contextPath }/js/layer.js"></script>
 <script src="${pageContext.request.contextPath }/js/ckplayer/ckplayer.js"></script>
 <script src="http://static.bcedocument.com/reader/v2/doc_reader_v2.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath }/js/index.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/index.js"></script>
 	<script type="text/javascript">
 		function startTime(){
 			var today=new Date()
@@ -47,7 +47,6 @@
 			document.getElementById('time').innerHTML=" "+month+"月"+date+"日  "+week[day]+"  "+h+":"+m+":"+s+" "
 			t=setTimeout('startTime()',500)
 		}
-
 		function checkTime(i){
 			if (i<10)
 			{i="0" + i}
@@ -65,6 +64,63 @@
 			var day=today.getDate();
 			var str = month+"月"+day+"日"+d[today.getDay()+1];
 			return str;
+		}
+		function buildfile(){
+			layer.prompt({title: '新建文件夹'}, function(filename, index){
+				$.post("file/addDirectory.action",{
+					"currentPath":currentPath,
+					"directoryName":filename
+				},function(data){
+				//	alert(data.code);
+					if(filename.length<1)
+					{alert("文件夹名为空")}
+					else{
+					if(data.code===331){
+						layer.msg('新建文件夹'+filename+'失败,状态码:'+data.code);
+					}else{
+						layer.msg('新建文件夹'+filename+'成功:'+data.code);
+						layer.close(index);
+						getFiles(currentPath);
+					}}
+				});
+			});
+		}
+		function share(obj){
+			var $check = $("input:checked").not($("#checkAll"));
+			if($check.length < 1){
+				alert("请选择至少一个");
+			}else{
+				var shareFiles = $check.parent().next().children();
+				var shareFile = new Array();
+				for(var i = 0; i < shareFiles.length; i++){
+					shareFile[i] = $(shareFiles[i]).text();
+				}
+				$.ajax({
+					type:"POST",
+					url:"shareFile.action",
+					data:{
+						"currentPath":currentPath,
+						"shareFile":shareFile
+					},
+					traditional:true
+					,success:function(data){
+						layer.open({
+							title: '分享',
+							content: '<input id="url" value="' + joinUrl(data.data) + '" class="form-control" readonly="readonly"/>' +
+									'<intput id="command" value="私密分享码" '
+							,btn: ['复制到粘贴板', '返回']
+							,area: ['500px', '200px']
+							,yes: function(index, layero){
+								//按钮【按钮一】的回调
+								copyUrl($("#url"));
+							},end: function(index, layero){
+								$("input:checkbox").prop("checked", false);
+							}
+						});
+					}
+				});
+			}
+			return false;
 		}
 	</script>
 

@@ -216,8 +216,13 @@ public class FileController {
     public @ResponseBody Result<String> addDirectory(String currentPath,
                                                      String directoryName) {
         try {
-            fileService.addDirectory(request, currentPath, directoryName);
-            return new Result<>(336, true, "添加成功");
+            if(fileService.addDirectory(request, currentPath, directoryName))
+            {
+                return new Result<>(336, true, "添加成功");
+            }
+            else{
+                return new Result<>(331, false, "添加失败");
+            }
         } catch (Exception e) {
             return new Result<>(331, false, "添加失败");
         }

@@ -235,19 +235,21 @@ var currentPath;
 	}
 
 	/**新建文件夹 */
- 	function buildfile(){
+ 	/*function buildfile(){
 		layer.prompt({title: '新建文件夹'}, function(filename, index){
 			  $.post("file/addDirectory.action",{
 				  "currentPath":currentPath,
 				  "directoryName":filename
 			  },function(data){
-				  layer.msg('新建文件夹'+filename+'成功');
+			  		alert(data.code);
+			  	  if(data.code.trim()==="331"){
+				  layer.msg('新建文件夹'+filename+'失败,状态码:'+data.code);
 				  layer.close(index);
 				  getFiles(currentPath);
+			  	  }
 			  });
 		});
-		return false;
-	}
+	}*/
 	/** 复制文件及文件夹 */
 	function copyto(){
 		var $id = $("input:checked");
@@ -428,7 +430,8 @@ var currentPath;
 				,success:function(data){
 					layer.open({
 						  title: '分享',
-						  content: '<input id="url" value="' + joinUrl(data.data) + '" class="form-control" readonly="readonly"/>'
+						  content: '<input id="url" value="' + joinUrl(data.data) + '" class="form-control" readonly="readonly"/><br />' +
+							  '<intput id="command" value="私密分享码" type="text"></intput> <br /> '
 						  ,btn: ['复制到粘贴板', '返回'],
 						  area: ['500px', '200px']
 						  ,yes: function(index, layero){ 

@@ -444,9 +444,46 @@ public class FileService {
      * @return
      */
     public boolean addDirectory(HttpServletRequest request, String currentPath, String directoryName) throws IOException {
-        File file = new File(getFileName(request, currentPath), directoryName);
+         File file = new File(getFileName(request, currentPath), directoryName);
+    //      System.out.println(currentPath+directoryName);
+    //   return file.mkdir();
+    //     System.out.println(file.getName());
+        if(!file.exists()){
+         System.out.println("文件夹不存在:");
         return file.mkdir();
+        }
+        else{
+            return false;
+        }
     }
+
+    //判断是否出现过此文件夹
+    private static boolean findFileDirOrName(String path) {
+        File dirFile = new File(path);
+        if (dirFile.exists()) {
+            File[] files = dirFile.listFiles();
+            if (files != null) {
+                for (File fileChildDir : files) {
+                    //输出文件名或者文件夹名
+                    System.out.print(fileChildDir.getName());
+                    if (fileChildDir.isDirectory()) {
+                        System.out.println(" :  此为目录名");
+                        //通过递归的方式,可以把目录中的所有文件全部遍历出来
+                        findFileDirOrName(fileChildDir.getAbsolutePath());
+                    }
+                    if (fileChildDir.isFile()) {
+                        System.out.println(" :  此为文件名");
+                        return false;
+                    }
+                }
+            }
+        }else{
+            System.out.println("你想查找的文件不存在");
+            return true;
+        }
+        return true;
+    }
+
 
     /*--回收站显示所有删除文件--*/
     public List<RecycleFile> recycleFiles(HttpServletRequest request) throws Exception {

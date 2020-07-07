@@ -64,5 +64,6 @@
         <jarDirectory url="file://$MODULE_DIR$/WebContent/WEB-INF/lib" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="doc_reader_v2" level="application" />
   </component>
 </module>

@@ -11,7 +11,7 @@
 <%@page import="java.util.List"%>
 <html>
 <head>
-    <title>查询登录时间</title>
+    <title>查询系统日志</title>
 
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
