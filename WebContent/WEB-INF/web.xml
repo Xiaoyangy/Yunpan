@@ -52,37 +52,4 @@
 		<welcome-file>default.htm</welcome-file>
 		<welcome-file>default.jsp</welcome-file>
 	</welcome-file-list>
-	<servlet>
-		<servlet-name>kaptcha</servlet-name>
-		<servlet-class>com.google.code.kaptcha.servlet.KaptchaServlet</servlet-class>
-		<init-param>
-			<param-name>kaptcha.border</param-name>
-			<param-value>no</param-value>
-		</init-param>
-		<init-param>
-			<param-name>kaptcha.image.width</param-name>
-			<param-value>120</param-value>
-		</init-param>
-		<init-param>
-			<param-name>kaptcha.image.height</param-name>
-			<param-value>42</param-value>
-		</init-param>
-		<init-param>
-			<param-name>kaptcha.textproducer.font.size</param-name>
-			<param-value>32</param-value>
-		</init-param>
-		<init-param>
-			<param-name>kaptcha.textproducer.char.length</param-name>
-			<param-value>5</param-value>
-		</init-param>
-		<init-param>
-			<param-name>kaptcha.obscurificator.impl</param-name>
-			<param-value>com.google.code.kaptcha.impl.WaterRipple</param-value>
-		</init-param>
-	</servlet>
-
-	<servlet-mapping>
-		<servlet-name>kaptcha</servlet-name>
-		<url-pattern>/kaptcha</url-pattern>
-	</servlet-mapping>
 </web-app>
