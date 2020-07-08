@@ -25,15 +25,15 @@ public class Sys {
         return des;
     }
 
-    public String getLogin_time() {
+    public String getLogintime() {
         return login_time;
     }
 
-    public void setLogin_time(String login_time) {
+    public void setLogintime(String login_time) {
         this.login_time = login_time;
     }
 
-    public String getLogin_name() {
+    public String getLoginname() {
         return login_name;
     }
 
@@ -47,7 +47,7 @@ public class Sys {
                 '}';
     }
 
-    public void setLogin_name(String login_name) {
+    public void setLoginname(String login_name) {
         this.login_name = login_name;
     }
 

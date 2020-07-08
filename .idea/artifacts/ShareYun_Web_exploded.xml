@@ -64,6 +64,7 @@
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-expression-4.0.8.RELEASE.jar" />
           <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/spring-context-support-4.0.8.RELEASE.jar" />
           <element id="library" level="project" name="Spring-4.3.18.RELEASE" />
+          <element id="file-copy" path="$PROJECT_DIR$/WebContent/WEB-INF/lib/kaptcha-2.3.2.jar" />
         </element>
       </element>
     </root>
