@@ -56,7 +56,11 @@ public class ShareService {
 		List<ShareFile> files = null;
 		if(shares != null){
 			files = new ArrayList<>();
-			String rootPath = request.getSession().getServletContext().getRealPath("/") + FileService.PREFIX;
+			String rootPath = request.getSession().getServletContext().getRealPath("/");
+			rootPath=rootPath.replace("\\classes\\artifacts\\ShareYun_Web_exploded","");
+			rootPath+="/WebContent/";
+			rootPath=rootPath+ FileService.PREFIX;
+			System.out.println(rootPath);
 			for (Share share : shares) {
 				File file = new File(rootPath + share.getShareUser(), share.getPath());
 				ShareFile shareFile = new ShareFile();

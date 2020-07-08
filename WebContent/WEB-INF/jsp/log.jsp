@@ -49,8 +49,8 @@
             <c:forEach items="${sensor}" var="keyword">
                 <tr>
                     <td>${keyword.id}</td>
-                    <td>${keyword.login_name}</td>
-                    <td>${keyword.login_time}</td>
+                    <td>${keyword.loginname}</td>
+                    <td>${keyword.logintime}</td>
                     <td>${keyword.des}</td>
                 </tr>
             </c:forEach>

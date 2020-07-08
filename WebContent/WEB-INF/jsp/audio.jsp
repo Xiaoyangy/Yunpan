@@ -67,27 +67,6 @@ $(function(){
 			'src' : 'openFile.action?' + url,
 			'title' : fileName
 		}
-// 		,
-// 		{
-// 			'cover' : 'images/cover2.jpg',
-// 			'src' : 'http://so1.111ttt.com:8282/2016/1/06m/24/199240145502.m4a?tflag=1494769732&pin=84bac9745fcebbd3ed5c598b97e15c39&ip=114.233.172.33#.mp3',
-// 			'title' : '不该 - 周杰伦、张惠妹'
-// 		},
-// 		{
-// 			'cover' : 'images/cover5.jpg',
-// 			'src' : 'http://so1.111ttt.com:8282/2015/1/10m/31/103311642007.m4a?tflag=1494769515&pin=26fa27d88422f6adb1fbca3f0f17333e&ip=114.233.172.33#.mp3',
-// 			'title' : '再见 - 邓紫棋'
-// 		},
-// 		{
-// 			'cover' : 'images/cover3.jpg',
-// 			'src' : 'http://so1.111ttt.com:8282/2017/1/05m/09/298092042172.m4a?tflag=1494768586&pin=f8d0e2e08864846460002b12768a9267&ip=114.233.172.33#.mp3',
-// 			'title' : '最后一次 - 庄心妍'
-// 		},
-// 		{
-// 			'cover' : 'images/cover1.jpg',
-// 			'src' : 'http://so1.111ttt.com:8282/2017/1/05m/09/298092036393.m4a?tflag=1494768868&pin=9a24cbf7571cb3524af1d6c883916169&ip=114.233.172.33#.mp3',
-// 			'title' : '远走高飞 - 金志文、徐佳莹'
-// 		}
 	];
 
 	var audioFn = audioPlay({

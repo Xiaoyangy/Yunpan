@@ -1,5 +1,6 @@
 /**当前文件路径指针*/
 var currentPath;
+
 	$(document).ready(function() {
 		getFiles("\\");
 		countPercent();
@@ -235,21 +236,26 @@ var currentPath;
 	}
 
 	/**新建文件夹 */
- 	/*function buildfile(){
+	function buildfile(){
 		layer.prompt({title: '新建文件夹'}, function(filename, index){
-			  $.post("file/addDirectory.action",{
-				  "currentPath":currentPath,
-				  "directoryName":filename
-			  },function(data){
-			  		alert(data.code);
-			  	  if(data.code.trim()==="331"){
-				  layer.msg('新建文件夹'+filename+'失败,状态码:'+data.code);
-				  layer.close(index);
-				  getFiles(currentPath);
-			  	  }
-			  });
+			$.post("file/addDirectory.action",{
+				"currentPath":currentPath,
+				"directoryName":filename
+			},function(data){
+				//	alert(data.code);
+				if(filename.length<1)
+				{alert("文件夹名为空")}
+				else{
+					if(data.code===331){
+						layer.msg('新建文件夹'+filename+'失败,状态码:'+data.code);
+					}else{
+						layer.msg('新建文件夹'+filename+'成功:'+data.code);
+						layer.close(index);
+						getFiles(currentPath);
+					}}
+			});
 		});
-	}*/
+	}
 	/** 复制文件及文件夹 */
 	function copyto(){
 		var $id = $("input:checked");
@@ -553,7 +559,6 @@ var currentPath;
 		var fileName = $(obj).text();
 		var parentPath = $(obj).attr("currentPath") == null ? currentPath : $(obj).attr("currentPath");
 		var url = encodeURI('currentPath='+parentPath+'&fileType='+fileType+'&fileName='+fileName);
-		alert(url);
 		if (fileType == "folder-open") {
 			var prePath = $(obj).attr("prePath");
 			var path = prePath + "\\" + fileName;

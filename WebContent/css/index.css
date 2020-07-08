@@ -4,18 +4,19 @@
 	height: 100%;
 }
 
-.top {
-	height: 10%;
-	width: 100%;
-}
 
 .bottom {
 	width: 100%;
 }
 
+.top {
+	height: 7%;
+	width: 100%;
+}
+
 .left {
 	width: 15%;
-	height: 90%;
+	height: 103%;
 	float: left;
 }
 

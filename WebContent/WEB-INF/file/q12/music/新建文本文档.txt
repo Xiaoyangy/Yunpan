@@ -34,7 +34,6 @@
 			background-size: cover;
 			font-size: 16px;
 		}
-
 		.c1 {
 			width: 600px;
 			position: absolute;
@@ -88,14 +87,14 @@
 		.yzm {
 			height: 30px;
 			margin: 0 auto;
-			width: 68%;
+			width: 40%;
 			line-height: 35px;
-			position: absolute;
+			position: relative;
 			margin-bottom: 10px;
 		}
 
 		.code {
-			width:36%;
+			width: 40%;
 			height: 30px;
 			border: 0;
 			border-color: transparent;
@@ -108,11 +107,11 @@
 		}
 
 		.code_pic {
-			margin-left: 15px;
+			margin-left: 30px;
 			vertical-align: top;
 			display: block;
 			width: 40%;
-			height: 30px;
+			height: 35px;
 			background-color: #34495e;
 			color: #FFF;
 			float: left;
@@ -126,15 +125,13 @@
 		.col-sm-offset-2.col-sm-10 {
 			width: 150px;
 			margin-top: 2px;
-			margin-left: 16px;
+			margin-left: -15px;
 			float: left;
-
 		}
 
 		.zhuc {
 			float: left;
 			margin-top: 2px;
-
 		}
 
 		.errorTips {
@@ -144,8 +141,7 @@
 			margin: 0 auto;
 			height: 30px;
 			line-height: 12px;
-			positon: relative;
-			margin-top: 10px;
+			positon: absolute;
 		}
 
 		input {
@@ -154,12 +150,12 @@
 		}
 
 		.modal-content {
-			width: 60%;
+			width:60%;
 			z-index: 0; /* 为不影响内容显示必须为最高层 */
 			position: relative;
 			overflow: hidden;
 			margin-left: 60px;
-			color: white;
+			color:white;
 			background-color: rgba(0, 0, 0, 0.1)
 		}
 
@@ -173,18 +169,7 @@
 			filter: blur(20px); /* 值越大越模糊 */
 			z-index: -2; /* 模糊层在最下面 */
 			background-color: rgba(0, 0, 0, 0.5); /* 为文字更好显示，将背景颜色加深 */
-		}
 
-		ul {
-			position: absolute;
-			margin-top: 20px;
-			margin-left: 140px;
-		}
-
-		.c2 {
-			position: relative;
-			margin-top: 100px;
-			margin-left: 219px;
 		}
 	</style>
 
@@ -193,7 +178,6 @@
 			margin: 0;
 			padding: 0;
 		}
-
 		a {
 			text-decoration: none;
 		}
@@ -251,12 +235,6 @@
 		.re_pwd a:hover {
 			cursor: pointer;
 			color: #16A085;
-		}
-
-		.c3 {
-			position: absolute;
-			margin-top: -40px;
-			margin-left: 160px;
 		}
 	</style>
 
@@ -410,12 +388,11 @@
 	</script>
 
 </head>
-<body onload="changeImg()"
-	  background="${pageContext.request.contextPath }/img/backgro.png">
+<body onload="changeImg()" background="/img/backgro.png">
 
 <!--  <div  class="slider-panel" style="position:fixed;margin-top:0px;"><a href="#" >
-<img alt="网盘" title="yun网盘" src="https://uploadbeta.com/api/pictures/random/?key=BingEveryday ">
-</div> -->
+ <img alt="网盘" title="yun网盘" src="https://uploadbeta.com/api/pictures/random/?key=BingEveryday ">
+ </div> -->
 
 <div class="c1">
 	<img src="${pageContext.request.contextPath }/img/logo.png"
@@ -427,7 +404,7 @@
 						   placeholder="请输入用户名" required></li>
 			<br />
 			<!-- </div>
-    <div class="form-group"> -->
+        <div class="form-group"> -->
 			<li>密&nbsp&nbsp&nbsp码：<input type="password" name="upwd"
 										 id="pwd" placeholder="请输入密码" required></li>
 		</ul>
@@ -438,15 +415,15 @@
 				   placeholder="验证码"> <span id="code" class="code_pic"
 											title="看不清，换一张" onclick="changeImg()"></span>
 
-		</p><br />
+		</p>
 		<p class="errorTips" id="errorTips"></p>
 	</div>
+	<br />
 	<br />
 
 	<div class="col-sm-offset-2 col-sm-10">
 		<span id="span1"></span>
 	</div>
-	<div class="c3">
 		<div class="col-sm-offset-2 col-sm-10">
 			<button type="button" class="btn btn-primary" onclick="login()">登录</button>
 		</div>
@@ -454,7 +431,6 @@
 			<button onclick="singIn()" class="btn btn-warning btn-flat"
 					style="float: left">注册用户</button>
 		</div>
-	</div>
 	<div class="modal fade" id="updatePassword" tabindex="-1">
 		<div class="modal-dialog" role="document">
 
@@ -499,6 +475,6 @@
 			</div>
 		</div>
 	</div>
-</div>
+	</div>
 </body>
 </html>
