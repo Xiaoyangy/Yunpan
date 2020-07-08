@@ -25,7 +25,6 @@ import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.google.code.kaptcha.Constants;
 @Controller
 @RequestMapping("/user")
 public class UserController {

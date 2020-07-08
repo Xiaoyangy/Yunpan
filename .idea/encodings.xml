@@ -2,5 +2,6 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/WebContent/css/foder.css" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/WebContent/css/login.css" charset="GBK" />
   </component>
 </project>
