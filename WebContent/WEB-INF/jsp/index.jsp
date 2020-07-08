@@ -65,26 +65,6 @@
 			var str = month+"月"+day+"日"+d[today.getDay()+1];
 			return str;
 		}
-		function buildfile(){
-			layer.prompt({title: '新建文件夹'}, function(filename, index){
-				$.post("file/addDirectory.action",{
-					"currentPath":currentPath,
-					"directoryName":filename
-				},function(data){
-				//	alert(data.code);
-					if(filename.length<1)
-					{alert("文件夹名为空")}
-					else{
-					if(data.code===331){
-						layer.msg('新建文件夹'+filename+'失败,状态码:'+data.code);
-					}else{
-						layer.msg('新建文件夹'+filename+'成功:'+data.code);
-						layer.close(index);
-						getFiles(currentPath);
-					}}
-				});
-			});
-		}
 		function share(obj){
 			var $check = $("input:checked").not($("#checkAll"));
 			if($check.length < 1){
@@ -125,10 +105,37 @@
 		function vipF() {
 		}
 	</script>
-
+	<script>
+			var addDireFactory = function() {
+				//alert("add");
+				var filename = $("#addDireFactor").val();
+				var currentPath;
+				$.ajax({
+					type : 'POST',
+					url : 'file/addDirectory.action',
+					data : {
+						currentPath : currentPath,
+						directoryName: filename
+					},
+					success : function(result) {
+						if (result.code === 336) {
+							alert("创建成功");
+							$("#addNewFileDire").modal('hide');
+							location.replace(location.href);
+						} else {
+							alert("创建失败");
+						}
+					}
+				});
+		}
+	</script>
+	<script>
+		var newDire = function() {
+			$("#addNewFileDire").modal();
+		}
+	</script>
 </head>
 <body onload="startTime()">
-
 	<div class="content">
 		<div class="top">
 			<%@include file="top.jsp"%>

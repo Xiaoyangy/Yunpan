@@ -215,6 +215,7 @@ public class FileController {
     @RequestMapping("/addDirectory")
     public @ResponseBody Result<String> addDirectory(String currentPath,
                                                      String directoryName) {
+        System.out.println(currentPath);
         try {
             if(fileService.addDirectory(request, currentPath, directoryName))
             {
