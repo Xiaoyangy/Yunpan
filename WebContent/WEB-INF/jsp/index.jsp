@@ -32,7 +32,7 @@
 	<script type="text/javascript">
 		function startTime(){
 			var today=new Date()
-			var week=new Array("星期日","星期一","星期二","星期三","星期四","星期五","星期六");
+			var week=["星期日","星期一","星期二","星期三","星期四","星期五","星期六"];
 			var year=today.getYear()
 			var month=today.getMonth()+1
 			var date=today.getDate()
@@ -132,6 +132,32 @@
 	<script>
 		var newDire = function() {
 			$("#addNewFileDire").modal();
+		}
+	</script>
+	<script>
+		var privateKey=function () {
+			$("#privateSpace").modal();
+		}
+	</script>
+	<script>
+		var subPrivate=function () {
+			var privateCode=$("#privateCode").val();
+			$.ajax({
+				type : 'POST',
+				url : 'file/privateSpace.action',
+				data : {
+					password: privateCode
+				},
+				success : function(result) {
+					if (result.code === 101) {
+						alert("密码正确");
+						$("#privateSpacee").modal('hide');
+						window.location.replace("file/privateList.action");
+					} else {
+						alert("密码错误");
+					}
+				}
+			});
 		}
 	</script>
 </head>

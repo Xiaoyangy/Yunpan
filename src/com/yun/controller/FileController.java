@@ -10,22 +10,21 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.yun.pojo.*;
+import com.yun.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.yun.pojo.FileCustom;
-import com.yun.pojo.RecycleFile;
-import com.yun.pojo.Result;
-import com.yun.pojo.SummaryFile;
 import com.yun.service.FileService;
 import net.sf.json.JSONObject;
 
@@ -34,6 +33,9 @@ import net.sf.json.JSONObject;
 public class FileController {
     @Autowired
     private HttpServletRequest request;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private FileService fileService;
@@ -51,11 +53,24 @@ public class FileController {
     public @ResponseBody Result<String> upload(
             @RequestParam("files") MultipartFile[] files, String currentPath) {
         try {
+            System.out.println("this is curre"+currentPath);
             fileService.uploadFilePath(request, files, currentPath);
         } catch (Exception e) {
             return new Result<>(301, false, "上传失败");
         }
         return new Result<String>(305, true, "上传成功");
+    }
+
+    @RequestMapping("/privateUpload")
+    public @ResponseBody Result<String> Privateupload(
+            @RequestParam("files") MultipartFile[] files, String currentPath) {
+        try {
+            System.out.println("this is curre"+currentPath);
+            fileService.uploadPrivateFilePath(request, files, currentPath);
+        } catch (Exception e) {
+            return new Result<>(305, false, "上传失败");
+        }
+        return new Result<String>(301, true, "上传成功");
     }
 
 
@@ -117,7 +132,49 @@ public class FileController {
             return null;
         }
     }
-
+    /*私密文件下载*/
+    @RequestMapping("/Privatedownload")
+    public ResponseEntity<byte[]> privatedownload(String currentPath,
+                                           String[] downPath, String username) {
+        try {
+            System.out.println("this is download path"+currentPath);
+            String down = request.getParameter("downPath");
+            File downloadFile = fileService.downPrivatePackage(request, currentPath,
+                    downPath, username);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            String fileName = new String(downloadFile.getName().getBytes(
+                    "utf-8"), "iso-8859-1");
+            headers.setContentDispositionFormData("attachment", fileName);
+            byte[] fileToByteArray = org.apache.commons.io.FileUtils
+                    .readFileToByteArray(downloadFile);
+            fileService.deleteDownPackage(downloadFile);
+            return new ResponseEntity<byte[]>(fileToByteArray, headers,
+                    HttpStatus.CREATED);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    /*私密空间*/
+    @RequestMapping("/privateSpace")
+    public  @ResponseBody Result<String>
+    privateSpace(HttpServletRequest request,String password){
+        if(password.equals(userService.findUser((String)request.getSession().getAttribute("username")).getPrivateKey())) {
+            return new Result<>(101,true,"true");
+        }
+        return new Result<>(102,false,"false");
+    }
+    /*私密空间列表*/
+    @RequestMapping("/privateList")
+    public String privateList(HttpServletRequest request,Model model) throws IOException {
+        String Path="privateSpace";
+        String realPath = fileService.getFileName(request,Path);
+        System.out.println("this is private list"+realPath);
+        List<FileCustom> fileList = fileService.listFile(realPath);
+        model.addAttribute("fileList",fileList);
+        return "privateList";
+    }
     /**
      * 获取文件列表
      *
@@ -134,7 +191,16 @@ public class FileController {
         result.setData(listFile);
         return result;
     }
-
+    /*读取私密文件列表*/
+    @RequestMapping("/getPrivateFiles")
+    public @ResponseBody Result<List<FileCustom>> getPrivateFiles(String path) throws IOException {
+        String realPath = fileService.getPrivateFileName(request, path);
+        List<FileCustom> listFile = fileService.listFile(realPath);
+        Result<List<FileCustom>> result = new Result<List<FileCustom>>(325,
+                true, "获取成功");
+        result.setData(listFile);
+        return result;
+    }
     /**
      * 登录-移动端
      *
@@ -249,6 +315,21 @@ public class FileController {
             return new Result<>(341, false, "删除失败");
         }
     }
+
+    /*删除私密文件*/
+    @RequestMapping("/delPriDirectory")
+    public @ResponseBody Result<String> delPriDirectory(String currentPath,
+                                                     String[] directoryName) {
+        try {
+            fileService.delPriDirectory(request, currentPath, directoryName);
+            return new Result<>(346, true, "删除成功");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Result<>(341, false, "删除失败");
+        }
+    }
+
+
 
     /**
      * 重命名文件夹
@@ -375,7 +456,17 @@ public class FileController {
             e.printStackTrace();
         }
     }
-
+/*打开私密文件*/
+    @RequestMapping("/openPrifile")
+    public void openPriFile(HttpServletResponse response, String currentPath,
+                     String fileName, String fileType) {
+    try {
+        fileService.respPrivateFile(response, request, currentPath, fileName,
+                fileType);
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
+}
     /**
      * 请求音乐播放页面
      *

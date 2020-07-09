@@ -10,8 +10,6 @@ public class User {
 	public static final String RECYCLE = "recycle";
 	private Integer id;
 	private String username;
-	private String password;
-	private String countSize;
 
 	@Override
 	public String toString() {
@@ -20,10 +18,24 @@ public class User {
 				", username='" + username + '\'' +
 				", password='" + password + '\'' +
 				", countSize='" + countSize + '\'' +
+				", privateKey='" + privateKey + '\'' +
 				", totalSize='" + totalSize + '\'' +
 				", vip=" + vip +
 				'}';
 	}
+
+
+	public String getPrivateKey() {
+		return privateKey;
+	}
+
+	public void setPrivateKey(String privateKey) {
+		this.privateKey = privateKey;
+	}
+
+	private String password;
+	private String countSize;
+	private String privateKey;
 
 	private String totalSize;
 	public Integer getVip() {

@@ -25,8 +25,10 @@
 	<script
 			src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 	<!--jquery.validate-->
-	<script type="text/javascript" src="js/jquery.validate.min.js"></script>
-	<script type="text/javascript" src="js/message.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.2.1.min.js"></script>
+
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 
 	<style type="text/css">
 		body {
@@ -39,8 +41,8 @@
 			width: 600px;
 			position: absolute;
 			margin: 2rem auto;
-			top: 34%;
-			left: 34%;
+			top: 30%;
+			left: 30%;
 			padding: 1em;
 			background: hsla(0, 0%, 100%, .25) border-box;
 			overflow: hidden;
@@ -103,7 +105,7 @@
 			border-radius: 5px;
 			padding-left: 8px;
 			float: left;
-			text-align: center;
+			text-align: left;
 			vertical-align: top;
 		}
 
@@ -121,6 +123,7 @@
 			border-radius: 5px;
 			text-align: center;
 			vertical-align: top;
+			cursor: hand;
 		}
 
 		.col-sm-offset-2.col-sm-10 {
@@ -136,7 +139,6 @@
 			margin-top: 2px;
 
 		}
-
 		.errorTips {
 			width: 70%;
 			color: red;
@@ -260,8 +262,6 @@
 		}
 	</style>
 
-
-
 	<script>
 		var singIn = function() {
 			$("#password1").blur(function() {
@@ -296,12 +296,76 @@
 								}
 							});
 
-			$("#updatePassword").modal();
+			$("#sinI").modal();
 		}
 	</script>
 	<script>
+		var video;//视频流对象
+		var context;//绘制对象
+		var canvas;//画布对象
+		$(function() {
+			var flag = false;
+			//开启摄像头
+			$("#singopen").click(function() {
+				//判断摄像头是否打开
+				if (!flag) {
+					//调用摄像头初始化
+					open();
+					flag = true;
+				}
+			});
+			//关闭摄像头
+			$("#singclose").click(function() {
+				//判断摄像头是否打开
+				if (flag) {
+					video.srcObject.getTracks()[0].stop();
+					flag = false;
+				}
+			});
+			//拍照
+			$("#singCatchCode").click(function() {
+				if (flag) {
+					context.drawImage(video, 0, 0, 330, 250);
+					submitSing();
+				} else
+					alert("请先开启摄像头!");
+			});
+		});
+		//开启摄像头
+		function open() {
+			//获取摄像头对象
+			canvas = document.getElementById("canvas");
+			context = canvas.getContext("2d");
+			//获取视频流
+			video = document.getElementById("video");
+			var videoObj = {
+				"video" : true
+			}, errBack = function(error) {
+				console.log("Video capture error: ", error.code);
+			};
+			context.drawImage(video, 0, 0, 330, 250);
+			//初始化摄像头参数
+			if (navigator.getUserMedia || navigator.webkitGetUserMedia
+					|| navigator.mozGetUserMedia) {
+				navigator.getUserMedia = navigator.getUserMedia
+						|| navigator.webkitGetUserMedia
+						|| navigator.mozGetUserMedia;
+				navigator.getUserMedia(videoObj, function(stream) {
+					video.srcObject = stream;
+					video.play();
+				}, errBack);
+			}
+		}
+		//将摄像头拍取的图片转换为Base64格式字符串
+		function getBase64() {
+			//获取当前图像并转换为Base64的字符串
+			var imgSrc = canvas.toDataURL("image/png");
+			//截取字符串
+			return imgSrc.substring(22);
+		};
 		var submitSing = function() {
 			var flag = true;
+			var img= getBase64();
 			var username = $("#username").val();
 			var pass = $("#password1").val();
 			var pass2 = $("#password2").val();
@@ -313,13 +377,15 @@
 			} else {
 				flag = true;
 			}
+			alert("sing to controller");
 			if (flag) {
 				$.ajax({
 					type : 'POST',
 					url : '/user/regist.action',
 					data : {
 						username : username,
-						password : pass
+						password : pass,
+						img : img
 					},
 					success : function(result) {
 						if (result.code === 901) {
@@ -331,7 +397,10 @@
 							$("#tip1").empty();
 							$("#tip2").empty();
 							$("#tip3").empty();
-						} else {
+							window.location.replace("/");
+						} else if(result.code===903){
+							alert("人脸识别失败");
+						}else{
 							alert("注册失败");
 						}
 					}
@@ -364,7 +433,6 @@
 
 		}
 	</script>
-
 	<script>
 		var login = function() {
 			var flag = true;
@@ -409,18 +477,129 @@
 		}
 	</script>
 
+
+	<%--face login --%>
+	<script>
+		var video;//视频流对象
+		var context;//绘制对象
+		var canvas;//画布对象
+		$(function() {
+			var flag = false;
+			//开启摄像头
+			$("#open").click(function() {
+				//判断摄像头是否打开
+				if (!flag) {
+					//调用摄像头初始化
+					open();
+					flag = true;
+				}
+			});
+			//关闭摄像头
+			$("#close").click(function() {
+				//判断摄像头是否打开
+				if (flag) {
+					video.srcObject.getTracks()[0].stop();
+					flag = false;
+				}
+			});
+			//拍照
+			$("#CatchCode").click(function() {
+				if (flag) {
+					context.drawImage(video, 0, 0, 330, 250);
+					CatchCode();
+				} else
+					alert("请先开启摄像头!");
+			});
+		});
+		//将当前图像传输到后台
+		function CatchCode() {
+			//获取图像
+			alert("sent to controller");
+			var img = getBase64();
+			//Ajax将Base64字符串传输到后台处理
+			$.ajax({
+				type : "POST",
+				url : "/facelogin.action",
+				data : {
+					img : img
+				},
+				dataType : "JSON",
+				success : function(data) {
+					//返回的结果
+				//	alert(JSON.stringify(data));
+					if(data.code===111){
+						alert("人脸登录成功");
+						window.location.replace("/index.action");
+					}else{
+						alert("人脸登录失败")
+					}
+				},
+				error : function(q, w, e) {
+					alert(q + w + e);
+				}
+			});
+		};
+		//开启摄像头
+		function open() {
+			//获取摄像头对象
+			canvas = document.getElementById("canvas");
+			context = canvas.getContext("2d");
+			//获取视频流
+			video = document.getElementById("video");
+			var videoObj = {
+				"video" : true
+			}, errBack = function(error) {
+				console.log("Video capture error: ", error.code);
+			};
+			context.drawImage(video, 0, 0, 330, 250);
+			//初始化摄像头参数
+			if (navigator.getUserMedia || navigator.webkitGetUserMedia
+					|| navigator.mozGetUserMedia) {
+				navigator.getUserMedia = navigator.getUserMedia
+						|| navigator.webkitGetUserMedia
+						|| navigator.mozGetUserMedia;
+				navigator.getUserMedia(videoObj, function(stream) {
+					video.srcObject = stream;
+					video.play();
+				}, errBack);
+			}
+		}
+		//将摄像头拍取的图片转换为Base64格式字符串
+		function getBase64() {
+			//获取当前图像并转换为Base64的字符串
+			var imgSrc = canvas.toDataURL("image/png");
+			//截取字符串
+			return imgSrc.substring(22);
+		};
+	</script>
+
+
 </head>
 <body onload="changeImg()"
 	  background="${pageContext.request.contextPath }/img/backgro.png">
-
+<p align="center">
+	<button id="open">开启摄像头</button>
+	<button id="close">关闭摄像头</button>
+	<button id="CatchCode">登录</button>
+</p>
+<div align="center" style="float: left;">
+	<video id="video" width="800px" height="800px" autoplay></video>
+	<canvas hidden="hidden" id="canvas" width="626" height="800"></canvas>
+</div>
 <!--  <div  class="slider-panel" style="position:fixed;margin-top:0px;"><a href="#" >
 <img alt="网盘" title="yun网盘" src="https://uploadbeta.com/api/pictures/random/?key=BingEveryday ">
 </div> -->
-
 <div class="c1">
-	<img src="${pageContext.request.contextPath }/img/logo.png"
-		 height="45" width="45" z-index:50
-		 style="filter: drop-shadow(2px 4px 6px black); float: left; position: absolute; margin-left: 20px;" ;/>
+	<img src="${pageContext.request.contextPath }/img/loginlo.png"
+		 height="678" width="678" z-index:50
+		 style="
+		  height: 150px;
+		  width:  150px;
+		  float: left;
+		  opacity: 0.8;
+		  position: absolute;
+		  filter: drop-shadow(2px 4px 6px black);
+		  margin-left: 0;"/>
 	<div class="col-sm-10">
 		<ul>
 			<li>用户名：<input type="text" name="uname" id="uname"
@@ -455,9 +634,8 @@
 					style="float: left">注册用户</button>
 		</div>
 	</div>
-	<div class="modal fade" id="updatePassword" tabindex="-1">
+	<div class="modal fade" id="sinI" tabindex="-1">
 		<div class="modal-dialog" role="document">
-
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal"
@@ -477,7 +655,7 @@
 						</div>
 						<div class="form-group">
 							<%--@declare id="message-text"--%>
-							<label for="message-text">新密码:</label> <input type='password'
+							<label for="message-text">密码:</label> <input type='password'
 																		  id="password1" name="password1" class="form-control" required
 																		  placeholder="长度为: 6-18">
 							<div style="display: inline" id="tip2"></div>
@@ -491,8 +669,9 @@
 					</form>
 				</div>
 				<div class="modal-footer">
-					<button onclick="submitSing()" class="btn btn-primary"
-							ng-disabled="editForm.$invalid">确定</button>
+					<button id="singopen" class="btn btn-group">打开摄像头</button>
+					<button id="singclose" class="btn btn-group">关闭摄像头</button>
+					<button id="singCatchCode" class="btn bg-primary">确定</button>
 					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
 				</div>
 				</form>

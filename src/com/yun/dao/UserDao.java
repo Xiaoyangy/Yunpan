@@ -26,4 +26,8 @@ public interface UserDao {
 
 	Vip findVip(@Param("vipCode") String vipCode);
 
+    User findUserByUserId(Integer id);
+
+    User findLastUser();
+
 }

@@ -1,12 +1,6 @@
 package com.yun.service;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +30,7 @@ import com.yun.utils.UserUtils;
 
 @Service
 public class FileService {
+
     /**
      * 文件相对前缀
      */
@@ -44,7 +39,7 @@ public class FileService {
     /**
      * 新用户注册默认文件夹
      */
-    public static final String[] DEFAULT_DIRECTORY = { "vido", "music", "source", "image", User.RECYCLE };
+    public static final String[] DEFAULT_DIRECTORY = { "vido", "music", "source", "image",User.RECYCLE };
     @Autowired
     private UserDao userDao;
     @Autowired
@@ -80,6 +75,30 @@ public class FileService {
         }
         reSize(request);
     }
+
+    /**
+    *私密文件上传
+    * */
+    public void uploadPrivateFilePath(HttpServletRequest request, MultipartFile[] files, String currentPath) throws Exception {
+    for (MultipartFile file : files) {
+        String fileName = file.getOriginalFilename();
+        String filePath = getPrivateFileName(request, currentPath);
+        File distFile = new File(filePath, fileName);
+        if (!distFile.exists()) {
+            file.transferTo(distFile);
+            if ("office".equals(FileUtils.getFileType(distFile))) {
+                try {
+                    String suffix = fileName.substring(fileName.lastIndexOf(".") + 1);
+                    String documentId = FileUtils.getDocClient().createDocument(distFile, fileName, suffix)
+                            .getDocumentId();
+                    officeDao.addOffice(documentId, FileUtils.MD5(distFile));
+                } catch (Exception e) {
+                }
+            }
+        }
+    }
+    reSize(request);
+}
 
     /**
      * 上传文件(安卓接口)
@@ -154,7 +173,27 @@ public class FileService {
         downloadFile = new File(packageZipName);
         return downloadFile;
     }
-
+    /** 私密文件打包*/
+    public File downPrivatePackage(HttpServletRequest request, String currentPath, String[] fileNames, String username)
+        throws Exception {
+    File downloadFile = null;
+    if (currentPath == null) {
+        currentPath = "";
+    }
+    if (fileNames.length == 1) {
+        downloadFile = new File(getPrivaFileName(request, currentPath, username), fileNames[0]);
+        if (downloadFile.isFile()) {
+            return downloadFile;
+        }
+    }
+    String[] sourcePath = new String[fileNames.length];
+    for (int i = 0; i < fileNames.length; i++) {
+        sourcePath[i] = getFileName(request, currentPath, username) + File.separator + fileNames[i];
+    }
+    String packageZipName = packageZip(sourcePath);
+    downloadFile = new File(packageZipName);
+    return downloadFile;
+}
     /**
      * 压缩文件
      *
@@ -224,6 +263,16 @@ public class FileService {
     System.out.println(rootPath);
         return  rootPath+PREFIX;
     }
+    /*
+    *获取私密文件路径
+    * */
+    public String getRootPath(HttpServletRequest request,Integer flag) throws IOException {
+        String rootPath=request.getSession().getServletContext().getRealPath("");
+        rootPath=rootPath.replace("\\classes\\artifacts\\ShareYun_Web_exploded","");
+        rootPath+="/WebContent/WEB-INF/privateFile/";
+        System.out.println("this is private root"+rootPath);
+        return  rootPath;
+    }
 
     /**
      * 获取回收站跟路径
@@ -250,6 +299,15 @@ public class FileService {
         return getRootPath(request) + username + File.separator + fileName;
     }
 
+    /** 获取私密文件路径 */
+    public String getPrivateFileName(HttpServletRequest request, String fileName) throws IOException {
+        if (fileName == null) {
+            fileName = "";
+        }
+        String username = UserUtils.getUsername(request);
+        return getRootPath(request,1) + username + File.separator + fileName;
+    }
+
     /**
      * 根据用户名获取文件路径
      *
@@ -267,6 +325,18 @@ public class FileService {
         }
         return getRootPath(request) + username + File.separator + fileName;
     }
+
+    /*根据用户名获取私密文件路径*/
+    public String getPrivaFileName(HttpServletRequest request, String fileName, String username) throws IOException {
+        if (username == null) {
+            return getPrivateFileName(request, fileName);
+        }
+        if (fileName == null) {
+            fileName = "";
+        }
+        return getRootPath(request,1) + username + File.separator + fileName;
+    }
+
 
     /**
      * 获取路径下的文件类别
@@ -336,6 +406,7 @@ public class FileService {
         }
         return lists;
     }
+
     //
     // public List<FileCustom> searchFile(HttpServletRequest request, String
     // currentPath, String reg) {
@@ -360,6 +431,7 @@ public class FileService {
         matchFile(request, list, new File(getFileName(request, currentPath)), reg, regType == null ? "" : regType);
         return list;
     }
+
 
     private void matchFile(HttpServletRequest request, List<FileCustom> list, File dirFile, String reg,
                            String regType) throws IOException {
@@ -554,6 +626,25 @@ public class FileService {
         reSize(request);
     }
 
+    public void delPriDirectory(HttpServletRequest request, String currentPath, String[] directoryName) throws Exception {
+        for (String fileName : directoryName) {
+      // 拼接源文件的地址
+
+            String srcPath = currentPath + File.separator + fileName;
+            //根据源文件相对地址拼接 绝对路径
+            System.out.println("shanchu:"+srcPath);
+            File src = new File(getPrivateFileName(request, srcPath));
+            File dest = new File(getRecyclePath(request));
+            //调用commons  jar包中的moveToDirectory移动文件
+            org.apache.commons.io.FileUtils.moveToDirectory(src, dest, true);
+            fileDao.insertFiles(srcPath, UserUtils.getUsername(request));
+            /*--将删除文件移动到recycle目录下*/
+            // moveDirectory(request,currentPath,directoryName,User.RECYCLE);
+        }
+        //重新计算文件大小
+        reSize(request);
+    }
+
     /* 还原文件 */
     //难点2.还原文件时不等同于移动文件到，因为还原文件需要保存多个地址，而还原只单纯保存一个地址
     //而且还原时需要判断父子文件是否都删除了，此时就需要新建立父文件，再建立子文件，而commons.io.FileUtils
@@ -629,11 +720,29 @@ public class FileService {
      */
     public void addNewNameSpace(HttpServletRequest request, String namespace) throws IOException {
         String fileName = getRootPath(request);
+        String preFileName= getRootPath(request,1);
         File file = new File(fileName, namespace);
         file.mkdirs();
+        File file1=new File(preFileName,namespace);
+        file1.mkdirs();
         for (String newFileName : DEFAULT_DIRECTORY) {
             File newFile = new File(file, newFileName);
             newFile.mkdirs();
+        }
+        String filename="私密文件夹使用说明";
+        File file2=new File(file1,fileName);
+        FileWriter fileWriter;
+        try {
+            fileWriter = new FileWriter("私密文件夹使用说明.txt");
+            //使用缓冲区比不使用缓冲区效果更好，因为每趟磁盘操作都比内存操作要花费更多时间。
+            //通过BufferedWriter和FileWriter的连接，BufferedWriter可以暂存一堆数据，然后到满时再实际写入磁盘
+            //这样就可以减少对磁盘操作的次数。如果想要强制把缓冲区立即写入,只要调用writer.flush();这个方法就可以要求缓冲区马上把内容写下去
+            BufferedWriter bufferedWriter=new BufferedWriter(fileWriter);
+            bufferedWriter.write("只可以上传下载查看删除文件，不可分享文件");
+            bufferedWriter.close();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
 
@@ -827,7 +936,18 @@ public class FileService {
             IOUtils.copy(inputStream, response.getOutputStream());
         }
     }
-
+    /*打开私有文件*/
+    public void respPrivateFile(HttpServletResponse response, HttpServletRequest request, String currentPath, String fileName,
+                     String type) throws IOException {
+    File file = new File(getPrivateFileName(request, currentPath), fileName);
+    InputStream inputStream = new FileInputStream(file);
+    if ("docum".equals(type)) {
+        response.setCharacterEncoding("UTF-8");
+        IOUtils.copy(inputStream, response.getWriter(), "UTF-8");
+    } else {
+        IOUtils.copy(inputStream, response.getOutputStream());
+    }
+    }
     /**
      * 打开文档文件
      *

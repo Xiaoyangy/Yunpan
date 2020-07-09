@@ -61,6 +61,28 @@ public class UserService {
 		return user;
 	}
 
+	public User findUser(Integer id){
+		User user = null;
+		try {
+			user = userDao.findUserByUserId(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return user;
+		}
+		return user;
+	}
+
+	public User findLast(){
+		User user = null;
+		try {
+			user = userDao.findLastUser();
+		} catch (Exception e) {
+			e.printStackTrace();
+			return user;
+		}
+		return user;
+	}
+
 	public boolean updatePassword(String username,String password){
 		try{
 			userDao.updatePassword(username,password);

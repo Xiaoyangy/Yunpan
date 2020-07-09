@@ -13,7 +13,7 @@
 	</select>
 	
 	<insert id="addUser" parameterType="com.yun.pojo.User">
-		insert into user(username, password,vip) values(#{username}, #{password}, #{vip})
+		insert into user(username, password,vip,privateKey) values(#{username}, #{password}, #{vip},123)
 	</insert>
 	
 	<update id="reSize">
@@ -32,5 +32,9 @@
     </update>
 	<select id="findVip" resultType="com.yun.pojo.Vip">
 	select * from vip where code=#{vipCode}
-</select>
+</select><select id="findUserByUserId" resultType="com.yun.pojo.User">
+    select * from user where id=#{id}
+ </select><select id="findLastUser" resultType="com.yun.pojo.User">
+    select *   from user where id=(select max(id) from user);
+ </select>
 </mapper>

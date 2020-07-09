@@ -7,7 +7,7 @@
 				style="list-style-type: none;font-size: 14px;list-style-position: outside;font-family: 'Microsoft YaHei',arial,SimSun,'宋体';padding-left: 0px">
 
 				<li style="width: 100%; height: 38px;padding: 0px;margin: 0px;">
-					<a href="index.action"
+					<a href="${pageContext.request.contextPath}/index.action"
 					style="display: inline-block;width: 179px;height: 38px;padding: 0px 0px 0px 15px;position: relative; vertical-align:middle; line-height: 38px;text-decoration: none;">
 						<span
 						style="width: 38px;height: 38px;display: inline-block;text-align: center;">
@@ -97,6 +97,44 @@
 
 				<li style="width: 100%; height: 38px;padding: 0px;margin: 0px;">
 					<a style="display: inline-block;width: 179px;height: 38px;padding: 0px 0px 0px 15px;position: relative;vertical-align:middle; line-height: 38px;text-decoration: none;"
+					   onclick="privateKey()">
+						<span
+								style="width: 38px;height: 38px;display: inline-block;text-align: center;">
+							<span class="glyphicon glyphicon-trash"></span>
+					</span> <span style="display: inline-block;text-align: left;">私密空间</span>
+					</a>
+				</li>
+				<div class="modal fade" id="privateSpace" tabindex="-1">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+										aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="vipModel">私密密码确认</h4>
+							</div>
+							<div class="modal-body">
+								<form name="editForm">
+									<div class="form-group">
+										<input type='password' id="privateCode" class="form-control"
+											   name="privateCode" required placeholder="私密密码">
+										<div style="display: inline" id="tip5"></div>
+									</div>
+								</form>
+							</div>
+							<div class="modal-footer">
+								<button onclick="subPrivate()" class="btn btn-primary"
+										ng-disabled="editForm.$invalid">确定</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+							</div>
+							</form>
+						</div>
+					</div>
+				</div>
+
+				<li style="width: 100%; height: 38px;padding: 0px;margin: 0px;">
+					<a style="display: inline-block;width: 179px;height: 38px;padding: 0px 0px 0px 15px;position: relative;vertical-align:middle; line-height: 38px;text-decoration: none;"
 					href="file/recycleFile.action">
 						<span
 						style="width: 38px;height: 38px;display: inline-block;text-align: center;">
@@ -113,7 +151,7 @@
 			    60%
 			  </div>
 			</div>
-			<span id="countSize">${countSize }</span>/<span id="totalSize">${totalSize }</span>
+			<span id="countSize">${countSize}</span>/<span id="totalSize">${totalSize }</span>
 			<div
 				style="margin-top: 10px;word-break:keep-all;white-space:nowrap;overflow:hidden;">
 				<span style="display: inline-block;width: 24%;"><a

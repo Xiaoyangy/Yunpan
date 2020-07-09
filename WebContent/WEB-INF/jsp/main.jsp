@@ -16,7 +16,7 @@
 				style="margin-left: 10px; margin-top: 10px; width: 100px;" onclick="newDire()">&nbsp;新建文件夹</a>
 			<div class="btn-group" role="group" id="operation"
 				style="margin-left: 10px; margin-top: 10px;">
-				<a class="btn btn-default glyphicon glyphicon-share" href="#" onclick="return share(this)">分享</a>
+				<a class="btn btn-default glyphicon glyphicon-share"  onclick="return share(this)">分享</a>
 				<a class="btn btn-default glyphicon glyphicon-download-alt" href="#" id="download" onclick="return downloadFileSelect(this)">下载</a>
 				<a class="btn btn-default glyphicon glyphicon-trash" href="#" id="delete" onclick="return deleteall()">删除</a>
 				<a class="btn btn-default" href="#" id="main-rename" onclick="return rename()">重命名</a> 

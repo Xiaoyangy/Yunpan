@@ -1,12 +1,15 @@
 package com.yun.controller;
 
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.yun.ai.FaceAdd;
 import com.yun.pojo.Result;
 import com.yun.service.FileService;
 import com.yun.service.SysService;
+import com.yun.utils.FaceSpot;
 import com.yun.utils.UserUtils;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.ParseException;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,7 +60,6 @@ public class UserController {
 			System.out.println("登陆成功");
 			sysService.loginTime(exsitUser.getUsername());
 			return new Result<>(111,true,"true");
-
 		}else{
 			System.out.println("登陆失败");
 			System.out.println("密码错误");
@@ -72,28 +75,47 @@ public class UserController {
 	 * @return
 	 */
 	@RequestMapping("/regist")
-	public @ResponseBody Result<String> regist(HttpServletRequest request,HttpServletResponse response, String username,String password) throws Exception {
+	public @ResponseBody Result<String> regist(HttpServletRequest request, String username,String password,String img) throws Exception {
 		User user=new User();
-		user.setUsername(username);
-		password=UserUtils.MD5(password);
-		user.setPassword(password);
-		user.setVip(0);
-		System.out.println(user);
-		if (!checkUser(user)) {
-			System.out.println("注册失败");
-			return new Result<>(902,false,"false");
-		} else {
-				boolean isSuccess = userService.addUser(user);
-				if(isSuccess){
-					System.out.println("注册成功");
-					fileService.addNewNameSpace(request, user.getUsername());
-					sysService.registTime(user.getUsername());
-					return new Result<>(901,true,"true");
-				}else{
-					return new Result<>(902,false,"false");
-				}
-		}
+		User user1=userService.findLast();
+		Integer userid=user1.getId()+1;
 
+		System.out.println(img);
+
+		String uid=String.valueOf(userid);
+
+		byte[] sendImg= Base64.getDecoder().decode(img);
+
+		String msg= FaceSpot.addUser(sendImg,"yunpanzhuce",uid,"yunpan");
+
+    	System.out.println("msgsing"+msg);
+
+		JSONObject jsonObject = JSONObject.fromObject(msg);
+		String jsonResu= (String) jsonObject.get("error_msg");
+		String Singsuccess="SUCCESS";
+    	if (Singsuccess.equals(jsonResu)) {
+     	 user.setUsername(username);
+     	 password = UserUtils.MD5(password);
+     	 user.setPassword(password);
+     	 user.setVip(0);
+     	 System.out.println(user);
+     	 if (!checkUser(user)) {
+     	   System.out.println("注册失败");
+      	  return new Result<>(902, false, "false");
+     	 } else {
+     	   boolean isSuccess = userService.addUser(user);
+    	    if (isSuccess) {
+    	      System.out.println("注册成功");
+     	     fileService.addNewNameSpace(request, user.getUsername());
+     	     sysService.registTime(user.getUsername());
+     	     return new Result<>(901, true, "true");
+      	  } else {
+     	     return new Result<>(902, false, "false");
+     	   }
+     	 }
+		}else{
+			return new Result<>(903, false, "false");
+	}
 	}
 	private boolean checkUser(User user) throws Exception {
 		if(user.getUsername()==null||user.getPassword()==null) {

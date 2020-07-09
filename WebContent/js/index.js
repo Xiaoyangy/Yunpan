@@ -71,6 +71,29 @@ var currentPath;
 			}
 		});
 	}
+	function getPrivateFiles(path) {
+	$.post("file/getPrivateFiles.action", {
+		"path" : path
+	}, function(data) {
+		if (data.success) {
+			currentPath = path;
+			$("#list").empty();
+			$("#checkAll").prop("checked",false);
+			$.each(data.data, function() {
+				$("#list").append('<tr><td><input onclick="selectCheckbox()" name="check_name" type="checkbox" aria-label="..."></td>' +
+					'<td width="60%"><a href="#" prePath="' + path +'" fileType="' + this.fileType +'" onclick="return openFile(this)"><span class="glyphicon glyphicon-'+this.fileType+'" style="margin-right: 10px"></span>' + this.fileName + '</a></td>' +
+					'<td width="32px">' +
+					'</td>' +
+					'<td width="32px"><a href="#"' +
+					'class="glyphicon glyphicon-download-alt" title="下载" onclick="return downloadFile(this)"></a></td>' +
+					'<td width="32px"><a href="#"' +
+					'class="glyphicon glyphicon-option-horizontal" title="更多"></a></td>' +
+					'<td>' + this.fileSize + '</td>' +
+					'<td>' + this.lastTime + '</td></tr>');
+			});
+		}
+	});
+	}
 	/**文件路径导航点击事件*/
 	function theClick(obj) {
 		getFiles($(obj).attr("path"));
@@ -421,7 +444,7 @@ var currentPath;
 			alert("请选择至少一个");
 		}else{
 			var shareFiles = $check.parent().next().children();
-			var shareFile = new Array();
+			var shareFile = [];
 			for(var i = 0; i < shareFiles.length; i++){
 				shareFile[i] = $(shareFiles[i]).text();
 			}

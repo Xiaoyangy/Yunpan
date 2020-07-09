@@ -4,12 +4,13 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="5">
+          <list size="6">
             <item index="0" class="java.lang.String" itemvalue="currentpath" />
             <item index="1" class="java.lang.String" itemvalue="placeholder" />
             <item index="2" class="java.lang.String" itemvalue="required" />
             <item index="3" class="java.lang.String" itemvalue="onselectstart" />
             <item index="4" class="java.lang.String" itemvalue="ng-disabled" />
+            <item index="5" class="java.lang.String" itemvalue="z-index:50" />
           </list>
         </value>
       </option>
@@ -18,7 +19,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="9">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -26,6 +27,8 @@
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
             <item index="6" class="java.lang.String" itemvalue="from" />
+            <item index="7" class="java.lang.String" itemvalue="video" />
+            <item index="8" class="java.lang.String" itemvalue="canvas" />
           </list>
         </value>
       </option>

@@ -69,5 +69,27 @@
     <orderEntry type="library" exported="" name="font-awesome" level="application" />
     <orderEntry type="library" exported="" name="jquery" level="application" />
     <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 9.0.35" level="application_server_libraries" />
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://$MODULE_DIR$/src" />
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library" exported="">
+      <library>
+        <CLASSES>
+          <root url="file://$MODULE_DIR$/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+        <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="lib" level="project" />
   </component>
 </module>
